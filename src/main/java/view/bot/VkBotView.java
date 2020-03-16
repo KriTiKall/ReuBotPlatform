@@ -12,4 +12,6 @@ public class VkBotView implements BotView {
     public void sendTimetable(String[][] timetable) {
 
     }
+
+
 }

@@ -1,4 +1,4 @@
-package data;
+package view.bot;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Parser {
-    public List<List<String>> parse(){
+public class ParserReu {
+    public static List<List<String>> parse(){
         List<List<String>> list = new ArrayList<>();
         try {
             Jsoup.connect("http://www.rea.perm.ru/?page_id=1036&id=Timetable/rs_PKo-21")
@@ -31,7 +31,7 @@ public class Parser {
         return list;
     }
 
-    private boolean trProcessing(Element element){
+    private static boolean trProcessing(Element element){
         return element.hasAttr("valign") || element.hasClass("fon");
     }
 }

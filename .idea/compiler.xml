@@ -6,6 +6,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="TimetableBot4Reu_myTry" />
+        <module name="TimetableBot4Reu" />
         <module name="ReuBotPlatform" />
       </profile>
     </annotationProcessing>
