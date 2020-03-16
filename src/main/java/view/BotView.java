@@ -1,6 +1,6 @@
 package view;
 
 public interface BotView {
-    void init();
+    static void init();
     void sendTimetable(String[][] timetable);
 }
