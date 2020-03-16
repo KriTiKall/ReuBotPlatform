@@ -9,6 +9,7 @@
         <module name="TimetableBot4Reu_myTry" />
         <module name="TimetableBot4Reu" />
         <module name="ReuBotPlatform" />
+        <module name="TimetableBot4Reu" />
       </profile>
     </annotationProcessing>
   </component>

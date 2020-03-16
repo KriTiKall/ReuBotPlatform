@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6b68476c-fd3d-4ed5-bd0b-b0d94cd583a9" name="Default Changelist" comment="">
+<<<<<<< HEAD
       <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/java/app/Main.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/java/view/bot/TgBotView.java" afterDir="false" />
@@ -14,6 +15,10 @@
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/data/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/bot/ParserReu.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/view/bot/VkBotView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/bot/VkBotView.java" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+>>>>>>> cb88a989bfb65c90a616b588bd126cddc7040bb8
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,6 +57,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+<<<<<<< HEAD
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/src/main/java" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../formBatcave/Batcave" />
@@ -78,6 +84,12 @@
         <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
+=======
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Batcave" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+>>>>>>> cb88a989bfb65c90a616b588bd126cddc7040bb8
   </component>
   <component name="ServiceViewManager">
     <option name="viewStates">
@@ -113,6 +125,7 @@
       <screen x="0" y="40" width="1920" height="1040" />
     </state>
     <state x="574" y="128" key="#com.intellij.ide.util.MemberChooser/0.0.1536.834@0.0.1536.834" timestamp="1583264295522" />
+<<<<<<< HEAD
     <state x="718" y="200" key="#com.intellij.ide.util.MemberChooser/0.40.1920.1040@0.40.1920.1040" timestamp="1584354636634" />
     <state x="808" y="450" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1583848943598">
       <screen x="0" y="40" width="1920" height="1040" />
@@ -175,5 +188,16 @@
       <screen x="0" y="40" width="1920" height="1040" />
     </state>
     <state x="666" y="189" key="refactoring.ChangeSignatureDialog/0.40.1920.1040@0.40.1920.1040" timestamp="1584294495935" />
+=======
+    <state x="740" y="316" key="FileChooserDialogImpl" timestamp="1583846965544">
+      <screen x="0" y="40" width="1920" height="1040" />
+    </state>
+    <state x="740" y="316" key="FileChooserDialogImpl/0.40.1920.1040@0.40.1920.1040" timestamp="1583846965544" />
+    <state x="581" y="343" key="com.intellij.ide.util.TipDialog" timestamp="1583846844684">
+      <screen x="0" y="40" width="1920" height="1040" />
+    </state>
+    <state x="465" y="243" key="com.intellij.ide.util.TipDialog/0.0.1536.834@0.0.1536.834" timestamp="1583261780284" />
+    <state x="581" y="343" key="com.intellij.ide.util.TipDialog/0.40.1920.1040@0.40.1920.1040" timestamp="1583846844684" />
+>>>>>>> cb88a989bfb65c90a616b588bd126cddc7040bb8
   </component>
 </project>
