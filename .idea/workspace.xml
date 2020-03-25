@@ -2,23 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6b68476c-fd3d-4ed5-bd0b-b0d94cd583a9" name="Default Changelist" comment="">
-<<<<<<< HEAD
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/app/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/view/bot/TgBotView.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/view/bot/parseReuMoy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/view/refacs/TgRefacs.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/testim.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/view/bot/TgListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/testis.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/data/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/bot/ParserReu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/BotView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/BotView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/bot/ParserReu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/bot/ParserReu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/bot/TgBotView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/bot/TgBotView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/view/bot/VkBotView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/bot/VkBotView.java" afterDir="false" />
-=======
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
->>>>>>> cb88a989bfb65c90a616b588bd126cddc7040bb8
+      <change beforePath="$PROJECT_DIR$/src/test/java/testim.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/app/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/app/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/view/bot/ParserReu.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/view/bot/ParserReu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/view/bot/TgBotView.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/view/bot/TgBotView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/testim.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,10 +55,9 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-<<<<<<< HEAD
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/src/main/java" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../formBatcave/Batcave" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../TimetableBot4Reu" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -84,12 +81,6 @@
         <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
-=======
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Batcave" />
-    <property name="project.structure.last.edited" value="Project" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
->>>>>>> cb88a989bfb65c90a616b588bd126cddc7040bb8
   </component>
   <component name="ServiceViewManager">
     <option name="viewStates">
@@ -125,32 +116,31 @@
       <screen x="0" y="40" width="1920" height="1040" />
     </state>
     <state x="574" y="128" key="#com.intellij.ide.util.MemberChooser/0.0.1536.834@0.0.1536.834" timestamp="1583264295522" />
-<<<<<<< HEAD
     <state x="718" y="200" key="#com.intellij.ide.util.MemberChooser/0.40.1920.1040@0.40.1920.1040" timestamp="1584354636634" />
     <state x="808" y="450" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1583848943598">
       <screen x="0" y="40" width="1920" height="1040" />
     </state>
     <state x="808" y="450" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.40.1920.1040@0.40.1920.1040" timestamp="1583848943598" />
-    <state x="740" y="316" key="FileChooserDialogImpl" timestamp="1584304039257">
+    <state x="740" y="316" key="FileChooserDialogImpl" timestamp="1585134352944">
       <screen x="0" y="40" width="1920" height="1040" />
     </state>
-    <state x="740" y="316" key="FileChooserDialogImpl/0.40.1920.1040@0.40.1920.1040" timestamp="1584304039257" />
-    <state width="1877" height="261" key="GridCell.Tab.0.bottom" timestamp="1584354785841">
+    <state x="740" y="316" key="FileChooserDialogImpl/0.40.1920.1040@0.40.1920.1040" timestamp="1585134352944" />
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1585161608709">
       <screen x="0" y="40" width="1920" height="1040" />
     </state>
-    <state width="1877" height="261" key="GridCell.Tab.0.bottom/0.40.1920.1040@0.40.1920.1040" timestamp="1584354785841" />
-    <state width="1877" height="261" key="GridCell.Tab.0.center" timestamp="1584354785840">
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.40.1920.1040@0.40.1920.1040" timestamp="1585161608709" />
+    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1585161608709">
       <screen x="0" y="40" width="1920" height="1040" />
     </state>
-    <state width="1877" height="261" key="GridCell.Tab.0.center/0.40.1920.1040@0.40.1920.1040" timestamp="1584354785840" />
-    <state width="1877" height="261" key="GridCell.Tab.0.left" timestamp="1584354785840">
+    <state width="1877" height="282" key="GridCell.Tab.0.center/0.40.1920.1040@0.40.1920.1040" timestamp="1585161608709" />
+    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1585161608709">
       <screen x="0" y="40" width="1920" height="1040" />
     </state>
-    <state width="1877" height="261" key="GridCell.Tab.0.left/0.40.1920.1040@0.40.1920.1040" timestamp="1584354785840" />
-    <state width="1877" height="261" key="GridCell.Tab.0.right" timestamp="1584354785841">
+    <state width="1877" height="282" key="GridCell.Tab.0.left/0.40.1920.1040@0.40.1920.1040" timestamp="1585161608709" />
+    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1585161608709">
       <screen x="0" y="40" width="1920" height="1040" />
     </state>
-    <state width="1877" height="261" key="GridCell.Tab.0.right/0.40.1920.1040@0.40.1920.1040" timestamp="1584354785841" />
+    <state width="1877" height="282" key="GridCell.Tab.0.right/0.40.1920.1040@0.40.1920.1040" timestamp="1585161608709" />
     <state width="1325" height="347" key="GridCell.Tab.1.bottom" timestamp="1583940248973">
       <screen x="0" y="40" width="1920" height="1040" />
     </state>
@@ -179,25 +169,18 @@
       <screen x="0" y="40" width="1920" height="1040" />
     </state>
     <state x="776" y="339" key="chooseDestDirectoryDialog/0.40.1920.1040@0.40.1920.1040" timestamp="1583856932710" />
-    <state x="581" y="343" key="com.intellij.ide.util.TipDialog" timestamp="1584352167582">
-      <screen x="0" y="40" width="1920" height="1040" />
-    </state>
-    <state x="465" y="243" key="com.intellij.ide.util.TipDialog/0.0.1536.834@0.0.1536.834" timestamp="1583261780284" />
-    <state x="581" y="343" key="com.intellij.ide.util.TipDialog/0.40.1920.1040@0.40.1920.1040" timestamp="1584352167582" />
-    <state x="666" y="189" key="refactoring.ChangeSignatureDialog" timestamp="1584294495935">
-      <screen x="0" y="40" width="1920" height="1040" />
-    </state>
-    <state x="666" y="189" key="refactoring.ChangeSignatureDialog/0.40.1920.1040@0.40.1920.1040" timestamp="1584294495935" />
-=======
-    <state x="740" y="316" key="FileChooserDialogImpl" timestamp="1583846965544">
-      <screen x="0" y="40" width="1920" height="1040" />
-    </state>
-    <state x="740" y="316" key="FileChooserDialogImpl/0.40.1920.1040@0.40.1920.1040" timestamp="1583846965544" />
     <state x="581" y="343" key="com.intellij.ide.util.TipDialog" timestamp="1583846844684">
       <screen x="0" y="40" width="1920" height="1040" />
     </state>
     <state x="465" y="243" key="com.intellij.ide.util.TipDialog/0.0.1536.834@0.0.1536.834" timestamp="1583261780284" />
     <state x="581" y="343" key="com.intellij.ide.util.TipDialog/0.40.1920.1040@0.40.1920.1040" timestamp="1583846844684" />
->>>>>>> cb88a989bfb65c90a616b588bd126cddc7040bb8
+    <state x="769" y="478" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1585135129686">
+      <screen x="0" y="40" width="1920" height="1040" />
+    </state>
+    <state x="769" y="478" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.40.1920.1040@0.40.1920.1040" timestamp="1585135129686" />
+    <state x="666" y="189" key="refactoring.ChangeSignatureDialog" timestamp="1584294495935">
+      <screen x="0" y="40" width="1920" height="1040" />
+    </state>
+    <state x="666" y="189" key="refactoring.ChangeSignatureDialog/0.40.1920.1040@0.40.1920.1040" timestamp="1584294495935" />
   </component>
 </project>
