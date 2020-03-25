@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ParserReu {
-    public static List<List<String>> parse(){
+    public List<List<String>> parse(){
         List<List<String>> list = new ArrayList<>();
         try {
             Jsoup.connect("http://www.rea.perm.ru/?page_id=1036&id=Timetable/rs_PKo-21")
@@ -31,7 +31,11 @@ public class ParserReu {
         return list;
     }
 
-    private static boolean trProcessing(Element element){
+    private final String[] words = {" преподаватель техникума", " преподаватель" , " доцент",
+                                    " старший преподаватель", " декан факультета", " профессор",
+                                    " заведующий кафедрой", " ассистент"};
+
+    private boolean trProcessing(Element element){
         return element.hasAttr("valign") || element.hasClass("fon");
     }
 }

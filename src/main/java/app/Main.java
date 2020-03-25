@@ -1,12 +1,14 @@
 package app;
 
-import org.telegram.telegrambots.ApiContextInitializer;
-import org.telegram.telegrambots.meta.TelegramBotsApi;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
-import view.bot.TgBotView;
-
+import view.bot.TgListener;
 public class Main {
     public static void main(String[] args){
-       TgBotView.start();
+        Init init = () -> {
+            TgListener.start();
+        };
+        init.init();
     }
+}
+interface Init{
+    void init();
 }
