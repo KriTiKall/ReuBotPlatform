@@ -1,6 +1,7 @@
 package view;
 
+import view.bot.DiscordBotView;
+
 public interface BotView {
-    static void init();
-    void sendTimetable(String[][] timetable);
+    DiscordBotView sendTimetable(String[][] timetable);
 }
