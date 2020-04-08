@@ -24,8 +24,7 @@ public class RefacVk {
     public static final String ACCESS_TOKEN = "8218cc5aa1968d54c405fd46ea52f389a73c758d7a0539087bcf3651eaf0826ec4760ae806483b1ac5ac2";
 
     public static final String[] template = {
-            "Расписание на понедельник (%s)\n",
-            "\n",
+            "Расписание (%s)\n",
             "1) %s\n",
             "2) %s\n",
             "3) %s\n",

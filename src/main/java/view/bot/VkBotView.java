@@ -3,49 +3,65 @@ package view.bot;
 import com.petersamokhin.bots.sdk.clients.Group;
 import com.petersamokhin.bots.sdk.objects.Message;
 import view.BotView;
+import view.refacs.MockObject;
 import view.refacs.RefacVk;
 
 public class VkBotView implements BotView {
 
-    private static final Group group = new Group((int) RefacVk.GROUP_ID, RefacVk.ACCESS_TOKEN);
+    private static Group group;
 
-    private String[][] timetable;
+    private static int chatid;
 
-    public VkBotView getInstance(String[][] timetable) {
-        return new VkBotView(timetable);
+    private String[][] timetable = MockObject.mock_1;
+
+    private static VkBotView view;
+
+    public static VkBotView getInstance() {
+        if(view == null)
+            view = new VkBotView();
+        return view;
     }
 
-    private VkBotView(String[][] timetable) {
-        this.timetable = timetable;
-        init();
-    }
-
-    @Override
-    public void init() {
+    private VkBotView() {
+        group = new Group(7240343, RefacVk.ACCESS_TOKEN);
         group.onSimpleTextMessage(VkBotView::onTextMessage);
-    }
-
-    @Override
-    public void sendTimetable(String[][] timetable) {
-
     }
 
     private static void onTextMessage(Message message) {
         String[] text = message.getText().split(" ");
+
+        chatid = message.authorId();
+
         if (text[0].equalsIgnoreCase("/getLesson")) {
-            sendMessage("We are Russians with us GOD", message);
+            view.sendTimetable(view.timetable);
         }
     }
 
-    private void sendMessagewithTimetable(String[][] timetable, Message msg) {
-
-
+    @Override
+    public void sendTimetable(String[][] timetable) {
+        new Message().from(group)
+                .to(chatid)
+                .text(timetableToString(timetable))
+                .send();
     }
 
-    private static void sendMessage(String text, Message msg) {
-        new Message().from(group)
-                .to(msg.authorId())
-                .text(text)
-                .send();
+    private String timetableToString(String[][] timetable) {
+        StringBuilder res = new StringBuilder();
+
+        for(int i = 0; i < 9; i++){
+            res.append(String.format(RefacVk.template[i], timetable[i][1]));
+            if(i == 0)
+                res.append("\n");
+        }
+
+        return new String(res);
+    }
+
+    public void setTimetable(String[][] timetable) {
+        this.timetable = timetable;
+    }
+
+    public String[][] getTimetable() {
+        return timetable;
     }
 }
