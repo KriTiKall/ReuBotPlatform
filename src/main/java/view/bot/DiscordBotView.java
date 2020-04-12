@@ -30,22 +30,21 @@ public class DiscordBotView implements BotView {
         BotView bot = new DiscordBotView();
     }
 
-    public DiscordBotView sendTimetable(String[][] timetable) {
+    public void sendTimetable(String[][] timetable) {
         TextChannel channel = jda.getTextChannelById("626093012317110273");
         EmbedBuilder eb = new EmbedBuilder();
         String date = timetable[0][1];
-        String reaIcon = "https://cdn.discordapp.com/attachments/626093012317110273/695312495585263646/D093D0B5D180D0B1_D0A0D0ADD0A3_D0B8D0BC_D09FD0BBD0B5D185D0B0D0BDD0BED0B2D0B0.png";
-        String gorin = "https://cdn.discordapp.com/attachments/620682597076566037/695317901405847571/-LGs1pvZfrE.jpg";
+        String reaIcon = RefacDiscord.LINK_REU_ICON;
+        String gorin = RefacDiscord.LINK_GORIN;
 
         eb.setAuthor("\uD83D\uDCDA РАСПИСАНИЕ"); // 📚
         eb.setThumbnail(reaIcon);
-        eb.setTitle(date, "http://www.rea.perm.ru/?page_id=1036&id=Timetable/rs_PKo-21");
+        eb.setTitle(date, RefacDiscord.LINK_REU_PK_21);
         for (int i = 1; i < timetable.length; i++)
             setLesson(eb, timetable[i][0], timetable[i][1]);
         eb.setFooter("как всегда говно", gorin);
 
         channel.sendMessage(eb.build()).queue();
-        return null;
     }
 
     private void setLesson(EmbedBuilder eb, String time, String lesson) {
