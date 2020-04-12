@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ParserReu {
+
     public List<List<String>> parse(){
         List<List<String>> list = new ArrayList<>();
         try {
@@ -30,10 +31,6 @@ public class ParserReu {
         }
         return list;
     }
-
-    private final String[] words = {" преподаватель техникума", " преподаватель" , " доцент",
-                                    " старший преподаватель", " декан факультета", " профессор",
-                                    " заведующий кафедрой", " ассистент"};
 
     private boolean trProcessing(Element element){
         return element.hasAttr("valign") || element.hasClass("fon");
