@@ -1,4 +1,4 @@
-package view.refacs;
+package view.vk.refac;
 
 public class MockObject {
     public static final String[][] mock_1 = {

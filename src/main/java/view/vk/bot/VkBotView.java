@@ -1,10 +1,10 @@
-package view.bot;
+package view.vk.bot;
 
 import com.petersamokhin.bots.sdk.clients.Group;
 import com.petersamokhin.bots.sdk.objects.Message;
 import view.BotView;
-import view.refacs.MockObject;
-import view.refacs.RefacVk;
+import view.vk.refac.MockObject;
+import view.vk.refac.RefacVk;
 
 public class VkBotView implements BotView {
 
