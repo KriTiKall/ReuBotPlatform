@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6b68476c-fd3d-4ed5-bd0b-b0d94cd583a9" name="Default Changelist" comment="" />
+    <list default="true" id="6b68476c-fd3d-4ed5-bd0b-b0d94cd583a9" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/data/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/data/ParserPK_21.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/refacs/RefacDiscord.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/refacs/RefacDiscord.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -17,6 +23,9 @@
         <option value="Interface" />
       </list>
     </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MavenImportPreferences">
     <option name="importingSettings">
@@ -36,10 +45,60 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../4IDEA" />
-    <property name="project.structure.last.edited" value="Project" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Facets" />
     <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="configurable.group.editor" />
+  </component>
+  <component name="RunManager" selected="Application.DiscordBotView">
+    <configuration name="DiscordBotView" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="view.bot.DiscordBotView" />
+      <module name="TimetableBot4Reu" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="view.bot.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="test" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="view.bot.test" />
+      <module name="TimetableBot4Reu" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="view.bot.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="zalupa" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="view.bot.zalupa" />
+      <module name="TimetableBot4Reu" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="view.bot.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.DiscordBotView" />
+        <item itemvalue="Application.test" />
+        <item itemvalue="Application.zalupa" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="ServiceViewManager">
     <option name="viewStates">
@@ -67,13 +126,47 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="574" y="128" key="#com.intellij.ide.util.MemberChooser" timestamp="1583264295522">
-      <screen x="0" y="0" width="1536" height="834" />
+    <state x="414" y="126" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1585133585943">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="414" y="126" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1080/1920.0.1280.1024@0.0.1920.1080" timestamp="1585133585943" />
+    <state x="718" y="166" key="#com.intellij.ide.util.MemberChooser" timestamp="1584386232913">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="574" y="128" key="#com.intellij.ide.util.MemberChooser/0.0.1536.834@0.0.1536.834" timestamp="1583264295522" />
-    <state x="465" y="243" key="com.intellij.ide.util.TipDialog" timestamp="1583261780284">
-      <screen x="0" y="0" width="1536" height="834" />
+    <state x="718" y="166" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1080/1920.0.1280.1024@0.0.1920.1080" timestamp="1584386232913" />
+    <state x="658" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1586360788415">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="658" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1080/1920.0.1280.1024@0.0.1920.1080" timestamp="1586360788415" />
+    <state x="690" y="237" key="FileChooserDialogImpl" timestamp="1585486908545">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="690" y="237" key="FileChooserDialogImpl/0.0.1920.1080/1920.0.1280.1024@0.0.1920.1080" timestamp="1585486908545" />
+    <state width="1865" height="531" key="GridCell.Tab.0.bottom" timestamp="1586703363316">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1865" height="531" key="GridCell.Tab.0.bottom/0.0.1920.1080/1920.0.1280.1024@0.0.1920.1080" timestamp="1586703363316" />
+    <state width="1865" height="531" key="GridCell.Tab.0.center" timestamp="1586703363316">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1865" height="531" key="GridCell.Tab.0.center/0.0.1920.1080/1920.0.1280.1024@0.0.1920.1080" timestamp="1586703363316" />
+    <state width="1865" height="531" key="GridCell.Tab.0.left" timestamp="1586703363315">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1865" height="531" key="GridCell.Tab.0.left/0.0.1920.1080/1920.0.1280.1024@0.0.1920.1080" timestamp="1586703363315" />
+    <state width="1865" height="531" key="GridCell.Tab.0.right" timestamp="1586703363316">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1865" height="531" key="GridCell.Tab.0.right/0.0.1920.1080/1920.0.1280.1024@0.0.1920.1080" timestamp="1586703363316" />
+    <state x="352" y="19" key="SettingsEditor" timestamp="1584388864078">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="352" y="19" key="SettingsEditor/0.0.1920.1080/1920.0.1280.1024@0.0.1920.1080" timestamp="1584388864078" />
+    <state x="581" y="315" key="com.intellij.ide.util.TipDialog" timestamp="1586785743521">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="465" y="243" key="com.intellij.ide.util.TipDialog/0.0.1536.834@0.0.1536.834" timestamp="1583261780284" />
+    <state x="581" y="315" key="com.intellij.ide.util.TipDialog/0.0.1920.1080/1920.0.1280.1024@0.0.1920.1080" timestamp="1586785743521" />
   </component>
 </project>
