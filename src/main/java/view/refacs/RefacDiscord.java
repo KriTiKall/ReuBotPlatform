@@ -1,7 +1,7 @@
 package view.refacs;
 
 public class RefacDiscord {
-    public static final String token = "NjY2Njg0MTczMTc1NDg4NTQy.Xm_Q9A.81LS90iDyZVPB6tST5TfeNVNMnA";
+    public static final String token = "NjY2Njg0MTczMTc1NDg4NTQy.XpMrVg.prkJ5sAFLrjKb5DglIWTAKrfAUQ";
     public static String prefix = "r/";
 
     public static final String LINK_REU_PK_21 = "http://www.rea.perm.ru/?page_id=1036&id=Timetable/rs_PKo-21";
