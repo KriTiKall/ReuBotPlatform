@@ -6,6 +6,7 @@ import view.discord.bot.DiscordBotView;
 import view.discord.refac.RefacDiscord;
 
 public class GetTT extends ListenerAdapter {
+
     public static final String[][] tt = {
             {"номер пары", "ВТ 17.03.2020"},
             {"1 пара 8:30 - 10:00", ""},
@@ -30,7 +31,7 @@ public class GetTT extends ListenerAdapter {
 
         if (args[0].equalsIgnoreCase(RefacDiscord.prefix + "getTT")) {
             e.getChannel().sendTyping();
-            bot.sendTimetable(tt);
+            bot.sendTimetableForSubs(tt);
         }
 
         if (args[0].equalsIgnoreCase("hooi"))

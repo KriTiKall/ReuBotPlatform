@@ -26,11 +26,7 @@ public class DiscordBotView implements BotView {
         }
     }
 
-    public static void main(String[] args) {
-        BotView bot = new DiscordBotView();
-    }
-
-    public void sendTimetable(String[][] timetable) {
+    public void sendTimetableForSubs(String[][] timetable) {
         TextChannel channel = jda.getTextChannelById("626093012317110273");
         EmbedBuilder eb = new EmbedBuilder();
         String date = timetable[0][1];

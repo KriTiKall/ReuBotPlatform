@@ -33,12 +33,12 @@ public class VkBotView implements BotView {
         chatid = message.authorId();
 
         if (text[0].equalsIgnoreCase("/getLesson")) {
-            view.sendTimetable(view.timetable);
+            view.sendTimetableForSubs(view.timetable);
         }
     }
 
     @Override
-    public void sendTimetable(String[][] timetable) {
+    public void sendTimetableForSubs(String[][] timetable) {
         new Message().from(group)
                 .to(chatid)
                 .text(timetableToString(timetable))

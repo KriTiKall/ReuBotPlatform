@@ -6,9 +6,11 @@ import java.util.GregorianCalendar;
 
 public class Performer {
 
-    private static final String[] words = {" преподаватель техникума", " преподаватель", " доцент",
+    private static final String[] words = {
+            " преподаватель техникума", " преподаватель", " доцент",
             " старший преподаватель", " декан факультета", " профессор",
-            " заведующий кафедрой", " ассистент"};
+            " заведующий кафедрой", " ассистент"
+    };
 
     public static String[][] removeTeacher(String[][] timetable) {
         for (int i = 0 ; i < timetable.length; i++) {
