@@ -1,5 +1,7 @@
 package view.vk.refac;
 
+import view.GetProperties;
+
 /**
  * Группа: ПКО-11
  * <p>
@@ -20,8 +22,8 @@ public class RefacVk {
 
     private boolean single = true;
     private long chatId;
-    public static final long GROUP_ID = 7240343;
-    public static final String ACCESS_TOKEN = "8218cc5aa1968d54c405fd46ea52f389a73c758d7a0539087bcf3651eaf0826ec4760ae806483b1ac5ac2";
+    public static final long GROUP_ID =Integer.valueOf(GetProperties.getInstanse().getProperty("vk.group_id"));
+    public static final String ACCESS_TOKEN = GetProperties.getInstanse().getProperty("vk.access_token");
 
     public static final String[] template = {
             "Расписание (%s)\n",

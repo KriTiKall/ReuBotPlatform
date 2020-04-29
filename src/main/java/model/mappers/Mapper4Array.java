@@ -115,7 +115,8 @@ public class Mapper4Array extends Mapper<ArrayList<ArrayList<String>>,  String[]
             }
         }
         for (int i = 0; i < item.size(); i++) {
-            newArr[0][i] = item.get(i).get(0) + "\n" + item.get(i).get(index) +"\n";
+            newArr[0][i] = item.get(i).get(0);
+            newArr[1][i] = item.get(i).get(index);
         }
         return newArr;
     }

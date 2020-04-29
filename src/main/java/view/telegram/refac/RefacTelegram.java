@@ -1,8 +1,10 @@
 package view.telegram.refac;
 
+import view.GetProperties;
+
 public class RefacTelegram {
-    public static final String BOT_NAME = "irorrerBot";
-    public static final String BOT_TOKEN = "778029216:AAH0t-lSnmtzE4JVvrp94-JLimPJJV5lhHI";
+    public static final String BOT_NAME = GetProperties.getInstanse().getProperty("tl.bot_name");
+    public static final String BOT_TOKEN = GetProperties.getInstanse().getProperty("tl.bot_token");
 
     public static final String[] template = {
             "Расписание на понедельник (%s)\n",
