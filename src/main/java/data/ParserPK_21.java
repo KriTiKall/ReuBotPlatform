@@ -8,7 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ParserPK_21 {
+public class ParserPK_21 implements Parser {
+
+    @Override
     public List<List<String>> parse(){
         List<List<String>> list = new ArrayList<>();
         try {

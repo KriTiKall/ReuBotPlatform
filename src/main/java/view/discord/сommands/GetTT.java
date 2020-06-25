@@ -1,9 +1,13 @@
-package view.bot.discordCommands;
+package view.discord.сommands;
 
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import view.bot.DiscordBotView;
-import view.refacs.RefacDiscord;
+import view.discord.bot.DiscordBotView;
+import view.discord.refac.RefacDiscord;
+
+import java.awt.*;
 
 public class GetTT extends ListenerAdapter {
     public static final String[][] tt = {
@@ -27,14 +31,26 @@ public class GetTT extends ListenerAdapter {
     @Override
     public void onMessageReceived(MessageReceivedEvent e) {
         String[] args = e.getMessage().getContentRaw().split("\\s+");
-
-        if (args[0].equalsIgnoreCase(RefacDiscord.prefix + "getTT")) {
-            e.getChannel().sendTyping();
-            bot.sendTimetable(tt);
+        boolean userNotBot = !e.getMember().getUser().isBot();
+        // отправит расписание при написании r/getTT
+        if (args[0].equalsIgnoreCase(RefacDiscord.prefix + "getTT") && userNotBot) {
+            TextChannel channel = e.getTextChannel();
+            channel.sendTyping();
+            bot.embedTimetable(tt, channel);
         }
-
-        if (args[0].equalsIgnoreCase("hooi"))
+        // тестовая команда
+        if (args[0].equalsIgnoreCase("hooi") && userNotBot)
             e.getChannel().sendMessage("ИДИ НАХУЙ").queue();
+
+        if (args[0].equalsIgnoreCase("ИДИ") && args[1].equalsIgnoreCase("НАХУЙ") && userNotBot)
+            e.getChannel().sendMessage("САМ ИДИ НАХУЙ").queue();
+
+        final String ALHAMDULILLAH = "https://tenor.com/tEh1.gif";
+
+        if (args[0].equalsIgnoreCase(RefacDiscord.prefix + "alhamdulillah") && userNotBot) {
+            EmbedBuilder eb = new EmbedBuilder();
+            e.getChannel().sendMessage(ALHAMDULILLAH).queue();
+        }
     }
 
 }
