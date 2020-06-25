@@ -40,7 +40,7 @@ public class DiscordBotView implements BotView {
     final String CHANNEL_ID = "725745635650699417";
     public void sendTimetableForSubs(String[][] timetable) {
         TextChannel channel = jda.getTextChannelById(CHANNEL_ID);
-        channel.sendMessage("**кушаем сладенькое расписание** \uD83D\uDC26 \n||для получения подписки смотреть закрепленное сообщение..||"); //🐦
+        channel.sendMessage(SetSubRole.subrole + "**кушаем сладенькое расписание** \uD83D\uDC26 \n||для получения подписки смотреть закрепленное сообщение..||"); //🐦
         embedTimetable(timetable, channel);
     }
     // эмбед с расписанием
