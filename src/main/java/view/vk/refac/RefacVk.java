@@ -22,8 +22,8 @@ public class RefacVk {
 
     private boolean single = true;
     private long chatId;
-    public static final long GROUP_ID =Integer.valueOf(GetProperties.getInstanse().getProperty("vk.group_id"));
-    public static final String ACCESS_TOKEN = GetProperties.getInstanse().getProperty("vk.access_token");
+    public static final long GROUP_ID =Integer.parseInt(GetProperties.getInstance().getProperty("vk.group_id"));
+    public static final String ACCESS_TOKEN = GetProperties.getInstance().getProperty("vk.access_token");
 
     public static final String[] template = {
             "Расписание (%s)\n",

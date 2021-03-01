@@ -3,7 +3,7 @@ package view.discord.refac;
 import view.GetProperties;
 
 public class RefacDiscord {
-    public static final String token = GetProperties.getInstanse().getProperty("ds.token");
+    public static final String token = GetProperties.getInstance().getProperty("ds.token");
     public static String prefix = "r/";
 
     public static final String LINK_REU_PK_21 = "http://www.rea.perm.ru/?page_id=1036&id=Timetable/rs_PKo-21";

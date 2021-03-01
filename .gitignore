@@ -1,3 +1,16 @@
 .idea/
 .target/
 .out/
+
+HELP.md
+target/
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+src/main/resources/config.properties
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr

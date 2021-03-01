@@ -11,7 +11,7 @@ public class TimerForParse {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                //хуй хуй хуй хуй хуй хуй хуй хуй хуй
+                //todo
             }
         }, 0, 1000 * 60 * minutes);
     }

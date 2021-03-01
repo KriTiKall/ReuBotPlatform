@@ -23,7 +23,7 @@
 
     <dependencies>
         <dependency>
-            <!-- jsoup HTML parser library @ https://jsoup.org/ -->
+            <!-- jsoup HTML model.parser library @ https://jsoup.org/ -->
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
             <version>1.11.3</version>
@@ -35,12 +35,6 @@
             <version>4.4.0.2</version>
         </dependency>
 
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.13</version>
-            <scope>test</scope>
-        </dependency>
         <!--vk-bot-lib-->
         <dependency>
             <groupId>com.petersamokhin</groupId>

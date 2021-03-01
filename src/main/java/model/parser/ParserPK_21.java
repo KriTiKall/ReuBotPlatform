@@ -1,4 +1,4 @@
-package data;
+package model.parser;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
@@ -8,9 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ParserPK_21 implements Parser {
+public class ParserPK_21 {
 
-    @Override
     public List<List<String>> parse(){
         List<List<String>> list = new ArrayList<>();
         try {
