@@ -53,10 +53,10 @@ public class TelegramListener  extends TelegramLongPollingBot implements BotView
                 }
                 stringBuilder
                         .append(timetable[i][j])
-                        .append("\n").toString();
+                        .append("\n");
             }
             stringBuilder
-                    .append("\n").toString();
+                    .append("\n");
         }
         sendMessage(msg, stringBuilder.toString());
     }

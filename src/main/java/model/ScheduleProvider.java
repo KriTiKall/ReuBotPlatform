@@ -2,19 +2,16 @@ package model;
 
 import model.dto.Schedule;
 
+import java.util.Date;
 import java.util.List;
 
-public interface DataAccess {
-
-    default void saveAll(List<Schedule> scheduleList) {
-        scheduleList.forEach(this::save);
-    }
-
-    void save(Schedule schedule);
+public interface ScheduleProvider {
 
     Schedule getOne(Schedule schedule);
 
     List<Schedule> getListByDate(String date);
 
     List<Schedule> getListByName(String name);
+
+    Schedule getSchedule(String groupName, Date date);
 }

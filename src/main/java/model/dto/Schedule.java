@@ -7,16 +7,6 @@ public class Schedule {
     private Lesson[] lessons;
     private String groupName;
     private String date;
-    private int hashCode;
-
-    public Schedule(Lesson[] lessons, String groupName, String date, int hashCode) {
-        if (lessons.length != 8)
-            throw new RuntimeException("Array of lesson have not 8 elements");
-        this.lessons = lessons;
-        this.groupName = groupName;
-        this.date = date;
-        this.hashCode = hashCode;
-    }
 
     public Schedule(Lesson[] lessons, String groupName, String date) {
         if (lessons.length != 8)
@@ -24,7 +14,6 @@ public class Schedule {
         this.lessons = lessons;
         this.groupName = groupName;
         this.date = date;
-        this.hashCode = hashCode();
     }
 
     public Schedule() {}
@@ -51,14 +40,6 @@ public class Schedule {
 
     public void setDate(String date) {
         this.date = date;
-    }
-
-    public int getHashCode() {
-        return hashCode;
-    }
-
-    public void setHashCode(int hashCode) {
-        this.hashCode = hashCode;
     }
 
     @Override
@@ -88,7 +69,6 @@ public class Schedule {
                 "lessons=" + Arrays.toString(lessons) +
                 ", groupName='" + groupName + '\'' +
                 ", date='" + date + '\'' +
-                ", hashCode=" + hashCode +
                 '}';
     }
 }
