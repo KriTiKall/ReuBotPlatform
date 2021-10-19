@@ -12,6 +12,8 @@ import view.BotView;
 import view.telegram.commands.TelegramListener;
 import view.telegram.refac.RefacTelegram;
 
+//савелий залупа хахахахах
+
 public class BotViewTelegram {
     public BotViewTelegram(){
         ApiContextInitializer.init();

@@ -15,36 +15,20 @@ public class ParserOfGroups implements Parser {
     }
     //todo add a method of processing not normal td to normal
     @Override
-    public Schedule[] parse(String url, String name) throws IOException {
+    public Schedule[] parse(String html, String name) throws IOException { // second param most be enum kept two options
         Elements[] trArray;
-        int size;
-        Lesson[][] disciplines;
+        Lesson[][] lessons;
         Schedule[] schedules;
         // Parsing and filtering row of schedule
-        Elements trs = Jsoup.connect(url)
-                .get()
+        Elements trs = Jsoup.parse(html)
                 .body()
                 .select("table")
                 .first()
                 .select("tr[class=\"fon\"], tr[valign=\"top\"]");
 
         trArray = multiLayerToOneLayer(trs); // getting array with nine elements containing tds list
-        size = trArray[0].size(); // getting general size
-        disciplines = new Lesson[size][8]; // width of matrix is count of day in schedule. eight is number of pair of schedule max
-        schedules = new Schedule[size]; // length of array is number of day in schedule.
-
-        for (int i = 0; i < disciplines.length; i++) { // get a lessons
-            for (int j = 0; j < disciplines[0].length; j++) {
-                disciplines[i][j] = elementToDiscipline(trArray[j + 1].get(i));
-            }
-        }
-
-        for (int i = 0; i < trArray[0].size(); i++) // creating schedule object
-            schedules[i] = new Schedule(
-                    disciplines[i],
-                    name,
-                    trArray[0].get(i).text()
-            );
+        lessons = parseLessons(trArray);
+        schedules = composeSchedule(lessons, name, trArray);
 
         return schedules;
     }
@@ -58,7 +42,7 @@ public class ParserOfGroups implements Parser {
 
         for (int i = 0; i < trs.size(); i++) {
             temp = trs.get(i).select("td"); // getting tds from tr item
-            temp.remove(0); // remove first element because it keep useless data
+            temp.remove(0); // remove first element because it keep useless information
 //            if(temp)  todo will add processing of colspan=3 // we have processing colspan=6
             trToNormalTds(trs.get(i)); // doing nothing
             elements[i % 9].addAll(temp); // adding normal tds list to schedule pair
@@ -81,12 +65,37 @@ public class ParserOfGroups implements Parser {
         return tds;
     }
 
-    private Lesson elementToDiscipline(Element td) {  // mapping td element to Discipline object
+    private Lesson[][] parseLessons(Elements[] trArray){
+        Lesson[][] lessons = new Lesson[trArray[0].size()][8]; // width of matrix is count of day in schedule. eight is number of pair of schedule max
+
+        for (int i = 0; i < lessons.length; i++) { // parsing a lessons
+            for (int j = 0; j < lessons[0].length; j++) {
+                lessons[i][j] = elementToLesson(trArray[j + 1].get(i));
+            }
+        }
+
+        return lessons;
+    }
+
+    private Lesson elementToLesson(Element td) {  // mapping td element to Discipline object
         String[] strings = td.html().split("<br>");
         if (strings.length == 3) {
             strings[0] = strings[0].substring(3, strings[0].length() - 4).trim();
             return new Lesson(strings[0], strings[1], strings[2]);
         } else
             return null;
+    }
+
+    private Schedule[] composeSchedule(Lesson[][] lessons, String name, Elements[] trArray){
+        Schedule[] schedules = new Schedule[trArray[0].size()]; // length of array is number of day in schedule.
+
+        for (int i = 0; i < trArray[0].size(); i++) // creating schedule object
+            schedules[i] = new Schedule(
+                    trArray[0].get(i).text(),
+                    name,
+                    lessons[i]
+                    );
+
+        return schedules;
     }
 }
