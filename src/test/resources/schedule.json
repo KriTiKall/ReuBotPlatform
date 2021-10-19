@@ -1,0 +1,125 @@
+[
+  {
+    "groupName": "Пко-31",
+    "date": "ЧТ 04.03.21 *",
+    "lessons": [
+      {
+        "type": "model.dto.Lesson",
+        "name": "Документирование и сертификация",
+        "teacherName": "преподаватель, Тарутин А.В.",
+        "information": "лекция, ауд. 220"
+      },
+      {
+        "type": "model.dto.Lesson",
+        "name": "Документирование и сертификация",
+        "teacherName": "преподаватель, Тарутин А.В.",
+        "information": "практика, ауд. 210/214"
+      },
+      {
+        "type": "model.dto.Lesson",
+        "name": "Программные средства офисного назначения",
+        "teacherName": "Гегин А.С.",
+        "information": "практика, ауд. 308 общ."
+      },
+      {
+        "type": "model.dto.Lesson",
+        "name": "Программные средства офисного назначения",
+        "teacherName": "Гегин А.С.",
+        "information": "практика, ауд. 308 общ."
+      },
+      {
+        "type": "Empty"
+      },
+      {
+        "type": "Empty"
+      },
+      {
+        "type": "Empty"
+      },
+      {
+        "type": "Empty"
+      }
+    ]
+  },
+  {
+    "groupName": "Пко-31",
+    "date": "ПТ 05.03.21 *",
+    "lessons": [
+      {
+        "type": "Empty"
+      },
+      {
+        "type": "Empty"
+      },
+      {
+        "type": "Empty"
+      },
+      {
+        "type": "model.dto.Lesson",
+        "name": "Технология разработки и защиты баз данных",
+        "teacherName": "преподаватель, Серебрякова Н.А.",
+        "information": "практика, ауд. Discord"
+      },
+      {
+        "type": "model.dto.Lesson",
+        "name": "Инструментальные средства разработки программного обеспечения",
+        "teacherName": "Берестов Д.Б.",
+        "information": "практика, ауд. Discord"
+      },
+      {
+        "type": "model.dto.Lesson",
+        "name": "Инструментальные средства разработки программного обеспечения",
+        "teacherName": "Берестов Д.Б.",
+        "information": "практика, ауд. Discord"
+      },
+      {
+        "type": "Empty"
+      },
+      {
+        "type": "Empty"
+      }
+    ]
+  },
+  {
+    "groupName": "Пко-31",
+    "date": "СБ 06.03.21 *",
+    "lessons": [
+      {
+        "type": "Empty"
+      },
+      {
+        "type": "Empty"
+      },
+      {
+        "type": "model.dto.Lesson",
+        "name": "Инфокоммуникационные системы и сети",
+        "teacherName": "преподаватель, Бочкарев А.М.",
+        "information": "лекция, ауд. Discord"
+      },
+      {
+        "type": "model.dto.Lesson",
+        "name": "Инфокоммуникационные системы и сети",
+        "teacherName": "преподаватель, Бочкарев А.М.",
+        "information": "лекция, ауд. Discord"
+      },
+      {
+        "type": "model.dto.Lesson",
+        "name": "Инфокоммуникационные системы и сети",
+        "teacherName": "преподаватель, Бочкарев А.М.",
+        "information": "практика, ауд. Discord"
+      },
+      {
+        "type": "model.dto.Lesson",
+        "name": "Инфокоммуникационные системы и сети",
+        "teacherName": "преподаватель, Бочкарев А.М.",
+        "information": "практика, ауд. Discord"
+      },
+      {
+        "type": "Empty"
+      },
+      {
+        "type": "Empty"
+      }
+    ]
+  }
+]

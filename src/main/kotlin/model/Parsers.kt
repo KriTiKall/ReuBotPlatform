@@ -10,7 +10,7 @@ import org.jsoup.select.Elements
 import java.io.IOException
 
 interface Parser {
-    //todo url -> html
+
     @Throws(IOException::class)
     fun parse(html: String, name: String): Array<Schedule>
 }
@@ -53,7 +53,7 @@ class ParserWithName : Parser {
 
     private fun parseLessons(trArray: Array<Elements>): Array<Array<LessonEntity>> =
         Array(trArray[0].size) {
-            // the matrix width is count of day in schedule. eight is number pair of schedule max
+            // INFO the matrix width is count of day in schedule. eight is number pair of schedule max
             Array<LessonEntity>(8) { EmptyLesson() }
         }.mapIndexed { i, el ->
             el.mapIndexed { j, ell ->
@@ -61,7 +61,7 @@ class ParserWithName : Parser {
             }.toTypedArray()
         }.toTypedArray()
 
-    // mapping td element to Discipline object
+    // INFO mapping td element to Discipline object
     private fun elementToLesson(td: Element): LessonEntity =
         td.html()
             .split("<br>")
@@ -81,7 +81,7 @@ class ParserWithName : Parser {
         name: String,
         trArray: Array<Elements>
     ): Array<Schedule> =
-        // length of array is number of day in schedule.
+        // INFO length of array is number of day in schedule.
         trArray[0].mapIndexed { ind, el ->
             Schedule(
                 el.text(),
