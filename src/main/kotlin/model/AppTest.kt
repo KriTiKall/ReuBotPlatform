@@ -1,8 +1,6 @@
 package model
 
-import model.dto.Schedule
-import model.parser.ParserOfGroups
-import model.parser.ParserWithName
+import model.parser.ScheduleParser
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.URL
@@ -44,7 +42,7 @@ class ScheduleReader() {
     fun test() {
         val format = DateTimeFormatter.ofPattern("yyyy.MM.dd")
         val now = format.format(LocalDateTime.now())
-        val parser = ParserWithName()
+        val parser = ScheduleParser()
 //        val url = getURL(now)
         val url = "https://rea.perm.ru/?page_id=1036&id=Timetable/rs_PKo-41"
 

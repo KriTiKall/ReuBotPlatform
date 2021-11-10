@@ -1,12 +1,13 @@
 package model.parser
 
-import model.dto.EmptyLesson
-import model.dto.Lesson
-import model.dto.LessonEntity
-import model.dto.Schedule
+import model.entity.EmptyLesson
+import model.entity.Lesson
+import model.entity.LessonEntity
+import model.entity.Schedule
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
+import java.io.File
 import java.io.IOException
 
 interface Parser {
@@ -15,78 +16,135 @@ interface Parser {
     fun parse(html: String, name: String): Array<Schedule>
 }
 
-class ParserWithName : Parser {
+class ScheduleParser(val withName: Boolean = false) : Parser {
 
     override fun parse(html: String, name: String): Array<Schedule> {
         return Jsoup.parse(html)
             .body()
             .select("table")
-            .first()
+            .first()!!
             .select("tr[class=\"fon\"], tr[valign=\"top\"]")
             .let {
-                val trs = multiLayerToOneLayer(it)
-                composeSchedule(parseLessons(trs), name, trs)
+                val row = it.get(0)
+                val lessons = multiLayerToOneLayer(it)
+                var infos = selectInfos(row)
+                composeSchedule(lessons, name, infos)
             }
     }
 
-    private fun multiLayerToOneLayer(trs: Elements): Array<Elements> {
-        val elements = Array(9) { Elements() }
+    private fun multiLayerToOneLayer(trs: Elements): Array<Array<LessonEntity>> {
+        val lessons = Array(8) { mutableListOf<LessonEntity>() }
+        trs.removeAt(0)
         // TODO: 18.10.2021 rewrite using reduce where  acc = elements
+
         trs.forEachIndexed { i, tr ->
-            elements[i % 9].addAll(trToNormalTds(tr))
+            lessons[i % 8].addAll(trToLessons(tr))
         }
-        return elements
+        return rotate90(lessons)
     }
 
-    private fun trToNormalTds(tr: Element): Elements {
+    private fun trToLessons(tr: Element): MutableList<LessonEntity> {
+        val list = mutableListOf<LessonEntity>()
+
         val tds = tr.select("td").apply {
             removeAt(0)
         }
+        var size = tds.size - 1
 
-        /*for (i in tds.indices) {
-            if (tds.get(i).html().matches(Regex("colspan=\"3\""))) {
-                // TODO: 17.10.2021 add a logic for colspan = 3 and colspane = 6
+        for (i in 0..size) {
+            val td = tds.get(i)
+            val lesson = tdToLesson(td)
+
+            if (td.toString().contains("colspan=\"3\"")) { //todo use field attributes
+                val auditorium = (tdToLesson(tds.get(i + 1)) as Lesson).auditorium
+                (lesson as Lesson).auditorium += "/$auditorium" // todo edit
+                tds.removeAt(i + 1)
+                size = tds.size - 1
             }
-        }*/
-        return tds
+            list.add(lesson)
+        }
+        return list
     }
 
-    private fun parseLessons(trArray: Array<Elements>): Array<Array<LessonEntity>> =
-        Array(trArray[0].size) {
-            // INFO the matrix width is count of day in schedule. eight is number pair of schedule max
-            Array<LessonEntity>(8) { EmptyLesson() }
-        }.mapIndexed { i, el ->
-            el.mapIndexed { j, ell ->
-                elementToLesson(trArray.get(j + 1).get(i))
-            }.toTypedArray()
-        }.toTypedArray()
-
-    // INFO mapping td element to Discipline object
-    private fun elementToLesson(td: Element): LessonEntity =
+    private fun tdToLesson(td: Element): LessonEntity =
         td.html()
             .split("<br>")
             .takeIf { it.size == 3 }
-            ?.let {
-                Lesson(
-                    it.get(0)
-                        .substring(3, it.get(0).length - 4)
-                        .trim { it <= ' ' },
-                    it.get(1),
-                    it.get(2)
-                )
-            } ?: EmptyLesson()
+            ?.let(::composeLesson)
+            ?: EmptyLesson()
 
+    private fun composeLesson(splits: List<String>): Lesson {
+        val name = splits.get(0)
+            .substring(3, splits.get(0).length - 4)
+            .trim { it <= ' ' }
+
+        val teacherName = splits.get(1)
+
+        val opInfo = splits.get(2)
+        val type = opInfo.substring(0, opInfo.indexOf(','))
+        val auditorium = opInfo.substring(opInfo.indexOf("ауд. ") + 4)
+
+        return Lesson(
+            name,
+            teacherName,
+            type,
+            auditorium
+        )
+    }
+
+    private fun rotate90(lessons: Array<MutableList<LessonEntity>>): Array<Array<LessonEntity>> {
+        val result = Array(lessons[0].size) { Array<LessonEntity>(lessons.size) { EmptyLesson() } }
+        var lesson: LessonEntity
+
+        for (i in result.indices) {
+            for (j in result[0].indices) {
+                lesson = lessons[j].get(i)
+                if (lesson !is EmptyLesson)
+                    result[i][j] = lesson
+            }
+
+        }
+        return result
+    }
+
+    private fun selectInfos(tr: Element): Array<String> =
+        tr.select("td")
+            .apply {
+                removeAt(0)
+            }
+            .map(Element::text)
+            .toTypedArray()
+
+    // INFO length of array is number of day in schedule.
     private fun composeSchedule(
         lessons: Array<Array<LessonEntity>>,
-        name: String,
-        trArray: Array<Elements>
-    ): Array<Schedule> =
-        // INFO length of array is number of day in schedule.
-        trArray[0].mapIndexed { ind, el ->
+        data: String,
+        infos: Array<String>
+    ): Array<Schedule> {
+        var name: String
+        var date: String
+
+        return infos.mapIndexed { ind, el ->
+            date = data
+            name = el
+            if (withName) {
+                date = el
+                name = data
+            }
+
             Schedule(
-                el.text(),
                 name,
+                date,
                 lessons[ind]
             )
         }.toTypedArray()
+    }
+
+}
+
+fun main() {
+    val parser = ScheduleParser(true)
+    val html = File("src/test/resources/schedule.html").readText()
+    val schedule = parser.parse(html, "PK-31")
+    schedule.forEach(::println)
 }

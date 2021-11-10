@@ -1,4 +1,4 @@
-package model.dto
+package model.entity
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -18,7 +18,8 @@ class EmptyLesson(): LessonEntity {
 data class Lesson(
     val name: String,
     val teacherName: String,
-    val information: String,
+    val type: String = "",
+    var auditorium: String = ""
 ): LessonEntity {
 
     override fun isEmpty() = false
@@ -32,7 +33,7 @@ data class Schedule(
 ) {
     init {
         if (lessons.size != 8)
-            throw RuntimeException("The array of lesson have not 8 elements")
+            throw RuntimeException("The array of lesson have not 8 elements(size=${lessons.size})")
     }
 
     constructor() : this("", "", emptyArray())

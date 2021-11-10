@@ -1,6 +1,6 @@
 package model;
 
-import model.dto.Schedule;
+import model.entity.Schedule;
 
 import java.util.Date;
 import java.util.List;

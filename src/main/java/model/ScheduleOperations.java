@@ -1,7 +1,7 @@
 package model;
 
-import model.dto.Lesson;
-import model.dto.Schedule;
+import model.entity.Lesson;
+import model.entity.Schedule;
 
 import java.util.Date;
 
