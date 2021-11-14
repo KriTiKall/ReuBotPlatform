@@ -18,7 +18,7 @@ interface Parser {
 
 class ScheduleParser(val withName: Boolean = false) : Parser {
 
-    override fun parse(html: String, name: String): Array<Schedule> {
+    override fun parse(html: String, title: String): Array<Schedule> {
         return Jsoup.parse(html)
             .body()
             .select("table")
@@ -28,7 +28,7 @@ class ScheduleParser(val withName: Boolean = false) : Parser {
                 val row = it.get(0)
                 val lessons = multiLayerToOneLayer(it)
                 var infos = selectInfos(row)
-                composeSchedule(lessons, name, infos)
+                composeSchedule(lessons, title, infos)
             }
     }
 
@@ -82,7 +82,7 @@ class ScheduleParser(val withName: Boolean = false) : Parser {
 
         val opInfo = splits.get(2)
         val type = opInfo.substring(0, opInfo.indexOf(','))
-        val auditorium = opInfo.substring(opInfo.indexOf("ауд. ") + 4)
+        val auditorium = opInfo.substring(opInfo.indexOf("ауд. ") + 5)
 
         return Lesson(
             name,
@@ -140,11 +140,4 @@ class ScheduleParser(val withName: Boolean = false) : Parser {
         }.toTypedArray()
     }
 
-}
-
-fun main() {
-    val parser = ScheduleParser(true)
-    val html = File("src/test/resources/schedule.html").readText()
-    val schedule = parser.parse(html, "PK-31")
-    schedule.forEach(::println)
 }

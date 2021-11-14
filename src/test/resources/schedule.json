@@ -1,31 +1,35 @@
 [
   {
-    "groupName": "Пко-31",
+    "groupName": "ПКо-31",
     "date": "ЧТ 04.03.21 *",
     "lessons": [
       {
-        "type": "model.dto.Lesson",
+        "type": "model.entity.Lesson",
         "name": "Документирование и сертификация",
         "teacherName": "преподаватель, Тарутин А.В.",
-        "information": "лекция, ауд. 220"
+        "LessonType": "лекция",
+        "auditorium": "220"
       },
       {
-        "type": "model.dto.Lesson",
+        "type": "model.entity.Lesson",
         "name": "Документирование и сертификация",
         "teacherName": "преподаватель, Тарутин А.В.",
-        "information": "практика, ауд. 210/214"
+        "LessonType": "практика",
+        "auditorium": "210/214"
       },
       {
-        "type": "model.dto.Lesson",
+        "type": "model.entity.Lesson",
         "name": "Программные средства офисного назначения",
         "teacherName": "Гегин А.С.",
-        "information": "практика, ауд. 308 общ."
+        "LessonType": "практика",
+        "auditorium": "308 общ."
       },
       {
-        "type": "model.dto.Lesson",
+        "type": "model.entity.Lesson",
         "name": "Программные средства офисного назначения",
         "teacherName": "Гегин А.С.",
-        "information": "практика, ауд. 308 общ."
+        "LessonType": "практика",
+        "auditorium": "308 общ."
       },
       {
         "type": "Empty"
@@ -42,7 +46,7 @@
     ]
   },
   {
-    "groupName": "Пко-31",
+    "groupName": "ПКо-31",
     "date": "ПТ 05.03.21 *",
     "lessons": [
       {
@@ -55,22 +59,25 @@
         "type": "Empty"
       },
       {
-        "type": "model.dto.Lesson",
+        "type": "model.entity.Lesson",
         "name": "Технология разработки и защиты баз данных",
         "teacherName": "преподаватель, Серебрякова Н.А.",
-        "information": "практика, ауд. Discord"
+        "LessonType": "практика",
+        "auditorium": "Discord"
       },
       {
-        "type": "model.dto.Lesson",
+        "type": "model.entity.Lesson",
         "name": "Инструментальные средства разработки программного обеспечения",
         "teacherName": "Берестов Д.Б.",
-        "information": "практика, ауд. Discord"
+        "LessonType": "практика",
+        "auditorium": "Discord"
       },
       {
-        "type": "model.dto.Lesson",
+        "type": "model.entity.Lesson",
         "name": "Инструментальные средства разработки программного обеспечения",
         "teacherName": "Берестов Д.Б.",
-        "information": "практика, ауд. Discord"
+        "LessonType": "практика",
+        "auditorium": "Discord"
       },
       {
         "type": "Empty"
@@ -81,7 +88,7 @@
     ]
   },
   {
-    "groupName": "Пко-31",
+    "groupName": "ПКо-31",
     "date": "СБ 06.03.21 *",
     "lessons": [
       {
@@ -91,28 +98,32 @@
         "type": "Empty"
       },
       {
-        "type": "model.dto.Lesson",
+        "type": "model.entity.Lesson",
         "name": "Инфокоммуникационные системы и сети",
         "teacherName": "преподаватель, Бочкарев А.М.",
-        "information": "лекция, ауд. Discord"
+        "LessonType": "лекция",
+        "auditorium": "Discord"
       },
       {
-        "type": "model.dto.Lesson",
+        "type": "model.entity.Lesson",
         "name": "Инфокоммуникационные системы и сети",
         "teacherName": "преподаватель, Бочкарев А.М.",
-        "information": "лекция, ауд. Discord"
+        "LessonType": "лекция",
+        "auditorium": "Discord"
       },
       {
-        "type": "model.dto.Lesson",
+        "type": "model.entity.Lesson",
         "name": "Инфокоммуникационные системы и сети",
         "teacherName": "преподаватель, Бочкарев А.М.",
-        "information": "практика, ауд. Discord"
+        "LessonType": "практика",
+        "auditorium": "Discord"
       },
       {
-        "type": "model.dto.Lesson",
+        "type": "model.entity.Lesson",
         "name": "Инфокоммуникационные системы и сети",
         "teacherName": "преподаватель, Бочкарев А.М.",
-        "information": "практика, ауд. Discord"
+        "LessonType": "практика",
+        "auditorium": "Discord"
       },
       {
         "type": "Empty"

@@ -9,8 +9,10 @@ import model.entity.EmptyLesson
 import model.entity.Lesson
 import model.entity.LessonEntity
 import model.entity.Schedule
+import model.parser.ScheduleParser
 import org.junit.jupiter.api.Test
 import java.io.File
+import kotlin.test.assertEquals
 
 val module = SerializersModule {
     polymorphic(LessonEntity::class) {
@@ -23,8 +25,18 @@ val format = Json { serializersModule = module }
 
 object TestConstants {
     const val HTML_PATH = "src/test/resources/schedule.html"
-    private const val PATH = "src/test/resources/schedule.json"
+    const val PATH = "src/test/resources/schedule.json"
+
     val SCHEDULE = format.decodeFromString<Array<Schedule>>(File(PATH).readText())
+}
+
+fun printCostTime(function: () -> Unit) {
+    var time = System.currentTimeMillis()
+
+    function()
+
+    time = System.currentTimeMillis() - time
+    println("Cost time equals a $time")
 }
 
 
@@ -32,10 +44,11 @@ internal class ScheduleParserTest {
 
     @Test
     fun parse() {
+        val expected = TestConstants.SCHEDULE
 
+        val parser = ScheduleParser(true)
+        val actual = parser.parse(File(TestConstants.HTML_PATH).readText(), "ПКо-31")
+
+        assertEquals(expected[0], actual[0])
     }
-}
-
-fun main() {
-    TestConstants.SCHEDULE.forEach(::println)
 }

@@ -10,19 +10,6 @@ import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 import java.util.stream.Collectors
 
-
-/*
-cool tips:
-    ctrl + R Replace with (ctrl + shift + R in Find in Files)
-    alt + shift + F add project elements to Favorites list(Alt + 2)
-    ctrl + O override methods
-    ctrl + I impl methods of the interfaces
-    ctrl + J show a list of suggestions for the current context
-    ctrl + f12 open navigator
-    shift + alt select several words
-    ctrl + alt + u open a UML diagram
-*/
-
 class ScheduleReader() {
     private val executor: Executor
 
@@ -66,18 +53,5 @@ class ScheduleReader() {
     }
 
     private fun getURL(date: String) = "https://rea.perm.ru/Timetable/rasp_2021.10.15.htm?page_id=1036&id=Timetable/rasp_$date"
-}
-
-fun main() {
-    printCostTime(ScheduleReader()::test)
-}
-
-fun printCostTime(function: () -> Unit) {
-    var time = System.currentTimeMillis()
-
-    function()
-
-    time = System.currentTimeMillis() - time
-    println("Cost time equals a $time")
 }
 
