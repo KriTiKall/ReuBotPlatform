@@ -1,5 +1,6 @@
 package model.parser
 
+import com.google.common.util.concurrent.Service
 import model.entity.EmptyLesson
 import model.entity.Lesson
 import model.entity.LessonEntity
@@ -11,7 +12,6 @@ import java.io.File
 import java.io.IOException
 
 interface Parser {
-
     @Throws(IOException::class)
     fun parse(html: String, name: String): Array<Schedule>
 }
@@ -25,23 +25,26 @@ class ScheduleParser(val withName: Boolean = false) : Parser {
             .first()!!
             .select("tr[class=\"fon\"], tr[valign=\"top\"]")
             .let {
-                val row = it.get(0)
+                var infos = selectInfos(it)
                 val lessons = multiLayerToOneLayer(it)
-                var infos = selectInfos(row)
                 composeSchedule(lessons, title, infos)
             }
     }
 
     private fun multiLayerToOneLayer(trs: Elements): Array<Array<LessonEntity>> {
         val lessons = Array(8) { mutableListOf<LessonEntity>() }
-        trs.removeAt(0)
-        // TODO: 18.10.2021 rewrite using reduce where  acc = elements
 
-        trs.forEachIndexed { i, tr ->
+        removeUnnecessary(trs).forEachIndexed { i, tr ->
             lessons[i % 8].addAll(trToLessons(tr))
         }
+
         return rotate90(lessons)
     }
+
+    private fun removeUnnecessary(trs: Elements) =
+        trs.filterIndexed { ind, _ ->
+            ind % 9 != 0
+        }
 
     private fun trToLessons(tr: Element): MutableList<LessonEntity> {
         val list = mutableListOf<LessonEntity>()
@@ -56,9 +59,32 @@ class ScheduleParser(val withName: Boolean = false) : Parser {
             val lesson = tdToLesson(td)
 
             if (td.toString().contains("colspan=\"3\"")) { //todo use field attributes
-                val auditorium = (tdToLesson(tds.get(i + 1)) as Lesson).auditorium
-                (lesson as Lesson).auditorium += "/$auditorium" // todo edit
-                tds.removeAt(i + 1)
+                val half = tdToLesson(tds.get(i + 1)) // todo edit all lesson field
+                var firstAud: String
+                var secondAud: String
+                var rm = 1
+
+                if (lesson is Lesson) {
+                    firstAud = lesson.auditorium
+
+                    if (half is Lesson)
+                        secondAud = half.auditorium
+                    else
+                        secondAud = half.toString()
+
+                    lesson.auditorium = "$firstAud/$secondAud" // "305 он-лайн д/307 он-лайн д"
+                } else {
+                    firstAud = lesson.toString()
+
+                    if (half is Lesson) {
+                        secondAud = half.auditorium
+                        half.auditorium = "$firstAud/$secondAud"
+                        rm = 0
+                    } else
+                        secondAud = half.toString()
+                }
+
+                tds.removeAt(i + rm)
                 size = tds.size - 1
             }
             list.add(lesson)
@@ -78,11 +104,24 @@ class ScheduleParser(val withName: Boolean = false) : Parser {
             .substring(3, splits.get(0).length - 4)
             .trim { it <= ' ' }
 
-        val teacherName = splits.get(1)
+        var opInfo = splits.get(1)
 
-        val opInfo = splits.get(2)
-        val type = opInfo.substring(0, opInfo.indexOf(','))
-        val auditorium = opInfo.substring(opInfo.indexOf("ауд. ") + 5)
+        val teacherName =
+            if (opInfo.contains(", ")) {
+                opInfo.split(", ")[1]
+            } else {
+                opInfo
+            }
+
+        opInfo = splits.get(2)
+
+        val (type, auditorium) =
+            if (opInfo.contains(", ауд.")) {
+                val tmp = opInfo.split(", ауд.").map { it.trim() }
+                Pair(tmp[0], tmp[1])
+            } else {
+                Pair(opInfo, "")
+            }
 
         return Lesson(
             name,
@@ -107,13 +146,15 @@ class ScheduleParser(val withName: Boolean = false) : Parser {
         return result
     }
 
-    private fun selectInfos(tr: Element): Array<String> =
-        tr.select("td")
-            .apply {
+    private fun selectInfos(tr: Elements): Array<String> =
+        tr.filterIndexed { ind, _ ->
+            ind % 9 == 0
+        }.flatMap {
+            it.select("td").apply {
                 removeAt(0)
             }
-            .map(Element::text)
-            .toTypedArray()
+        }.map(Element::text).toTypedArray()
+
 
     // INFO length of array is number of day in schedule.
     private fun composeSchedule(
@@ -139,5 +180,4 @@ class ScheduleParser(val withName: Boolean = false) : Parser {
             )
         }.toTypedArray()
     }
-
 }

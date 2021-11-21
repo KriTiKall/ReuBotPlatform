@@ -12,6 +12,7 @@ import model.entity.Schedule
 import model.parser.ScheduleParser
 import org.junit.jupiter.api.Test
 import java.io.File
+import java.time.LocalDate
 import kotlin.test.assertEquals
 
 val module = SerializersModule {
@@ -51,4 +52,11 @@ internal class ScheduleParserTest {
 
         assertEquals(expected[0], actual[0])
     }
+
+    @Test
+    fun testURL() {
+        val reader = ScheduleReader()
+        assertEquals("https://rea.perm.ru/Timetable/rasp_2021.11.17.htm", reader.getActualUrl(LocalDate.now()))
+    }
+
 }
