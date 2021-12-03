@@ -46,7 +46,7 @@ class ScheduleParser(val withName: Boolean = false) : Parser {
             ind % 9 != 0
         }
 
-    private fun trToLessons(tr: Element): MutableList<LessonEntity> {
+    private fun trToLessons(tr: Element): MutableList<LessonEntity> { //todo rewrite using pairLesson
         val list = mutableListOf<LessonEntity>()
 
         val tds = tr.select("td").apply {

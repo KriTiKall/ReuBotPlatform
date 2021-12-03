@@ -4,7 +4,9 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 interface LessonEntity {
+
     fun isEmpty() = true
+    fun isIndivisible() = true
 }
 
 @Serializable
@@ -34,6 +36,15 @@ data class Lesson(
 ): LessonEntity {
 
     override fun isEmpty() = false
+}
+
+@Serializable
+data class PairLesson(
+    val pair: Pair<LessonEntity, LessonEntity>
+) : LessonEntity {
+
+    override fun isEmpty() = false
+    override fun isIndivisible() = false
 }
 
 @Serializable

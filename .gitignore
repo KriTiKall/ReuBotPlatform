@@ -7,7 +7,7 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-src/main/resources/config.properties
+sl-model/src/main/resources/config.properties
 
 ### IntelliJ IDEA ###
 .idea
