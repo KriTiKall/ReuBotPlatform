@@ -45,7 +45,7 @@ class ScheduleReader(
     private var readed = false
 
     override fun run() {
-        var currentTime = LocalTime.now()
+        val currentTime = LocalTime.now()
         var array: Array<Schedule>
 
         // every day in 5 am parsing timetable on week forward

@@ -1,14 +1,9 @@
 package model.parser
 
-import com.google.common.util.concurrent.Service
-import model.entity.EmptyLesson
-import model.entity.Lesson
-import model.entity.LessonEntity
-import model.entity.Schedule
+import model.entity.*
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
-import java.io.File
 import java.io.IOException
 
 interface Parser {
@@ -56,35 +51,15 @@ class ScheduleParser(val withName: Boolean = false) : Parser {
 
         for (i in 0..size) {
             val td = tds.get(i)
-            val lesson = tdToLesson(td)
+            var lesson = tdToLesson(td)
 
             if (td.toString().contains("colspan=\"3\"")) { //todo use field attributes
-                val half = tdToLesson(tds.get(i + 1)) // todo edit all lesson field
-                var firstAud: String
-                var secondAud: String
-                var rm = 1
+                val secondHalf = tdToLesson(tds.get(i + 1))
+                lesson = PairLesson(
+                    Pair(lesson, secondHalf)
+                )
 
-                if (lesson is Lesson) {
-                    firstAud = lesson.auditorium
-
-                    if (half is Lesson)
-                        secondAud = half.auditorium
-                    else
-                        secondAud = half.toString()
-
-                    lesson.auditorium = "$firstAud/$secondAud" // "305 он-лайн д/307 он-лайн д"
-                } else {
-                    firstAud = lesson.toString()
-
-                    if (half is Lesson) {
-                        secondAud = half.auditorium
-                        half.auditorium = "$firstAud/$secondAud"
-                        rm = 0
-                    } else
-                        secondAud = half.toString()
-                }
-
-                tds.removeAt(i + rm)
+                tds.removeAt(i + 1)
                 size = tds.size - 1
             }
             list.add(lesson)

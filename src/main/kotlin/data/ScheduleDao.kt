@@ -8,6 +8,3 @@ interface IScheduleDao {
     fun save(schedule: Schedule)
     fun getHash(groupName: String, date: String): Int
 }
-
-class ScheduleDao {
-}
