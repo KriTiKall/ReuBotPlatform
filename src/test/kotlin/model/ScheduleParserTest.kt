@@ -1,5 +1,6 @@
 package model
 
+import format
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -12,15 +13,6 @@ import org.junit.jupiter.api.Test
 import java.io.File
 import kotlin.test.assertEquals
 
-val module = SerializersModule {
-    polymorphic(LessonEntity::class) {
-        subclass(EmptyLesson::class)
-        subclass(Lesson::class)
-        subclass(PairLesson::class)
-    }
-}
-
-val format = Json { serializersModule = module }
 
 object TestConstants {
     const val HTML_PATH = "src/test/resources/schedule.html"

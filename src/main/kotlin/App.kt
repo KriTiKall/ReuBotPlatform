@@ -1,13 +1,39 @@
 
-import java.util.concurrent.Executors
-import java.util.concurrent.TimeUnit
+import io.ktor.application.*
+import io.ktor.routing.*
+import io.ktor.server.netty.*
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.modules.SerializersModule
+import kotlinx.serialization.modules.polymorphic
+import kotlinx.serialization.modules.subclass
+import model.entity.EmptyLesson
+import model.entity.Lesson
+import model.entity.LessonEntity
+import model.entity.PairLesson
+import view.ScheduleOperation
+import view.scheduleOperations
 
-fun main() {
-//    val service = ScheduleSaveService()
-//    val reader = ScheduleReader(ScheduleParser(), service)
+val module = SerializersModule {
+    polymorphic(LessonEntity::class) {
+        subclass(EmptyLesson::class)
+        subclass(Lesson::class)
+        subclass(PairLesson::class)
+    }
+}
 
-    val exec = Executors.newSingleThreadScheduledExecutor()
-    exec.scheduleAtFixedRate({
+val format = Json { serializersModule = module }
 
-    }, 0, 15, TimeUnit.MINUTES)
+fun main(args: Array<String>) {
+//    val op = ScheduleOperation()
+//
+//    op.getCurrentSchedule("dsf")
+
+    EngineMain.main(args)
+}
+
+fun Application.module(testing: Boolean = false) {
+    val operationService = ScheduleOperation()
+    routing {
+        this.scheduleOperations(operationService)
+    }
 }
