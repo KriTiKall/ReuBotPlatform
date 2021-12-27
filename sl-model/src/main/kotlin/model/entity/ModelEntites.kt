@@ -4,6 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 interface LessonEntity {
+
     fun isEmpty() = true
     fun isIndivisible() = true
 }

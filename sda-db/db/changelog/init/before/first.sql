@@ -1,0 +1,3 @@
+CREATE USER "bot-api-admin" LOGIN SUPERUSER PASSWORD 'admin';
+
+CREATE DATABASE "rea-bot-api-db" OWNER "bot-api-admin" ENCODING 'UTF8' CONNECTION LIMIT 20;
