@@ -5,6 +5,7 @@ import kotlinx.serialization.Serializable
 
 interface LessonEntity {
     fun isEmpty() = true
+    fun isIndivisible() = true
 }
 
 @Serializable
@@ -12,17 +13,37 @@ interface LessonEntity {
 class EmptyLesson(): LessonEntity {
 
     override fun toString() = "Empty"
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return javaClass.hashCode()
+    }
 }
 
 @Serializable
 data class Lesson(
     val name: String,
     val teacherName: String,
+    @SerialName("LessonType")
     val type: String = "",
     var auditorium: String = ""
 ): LessonEntity {
 
     override fun isEmpty() = false
+}
+
+@Serializable
+data class PairLesson(
+    val pair: Pair<LessonEntity, LessonEntity>
+) : LessonEntity {
+
+    override fun isEmpty() = false
+    override fun isIndivisible() = false
 }
 
 @Serializable
@@ -37,4 +58,24 @@ data class Schedule(
     }
 
     constructor() : this("", "", emptyArray())
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Schedule
+
+        if (groupName != other.groupName) return false
+        if (date != other.date) return false
+        if (!lessons.contentEquals(other.lessons)) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = groupName.hashCode()
+        result = 31 * result + date.hashCode()
+        result = 31 * result + lessons.contentHashCode()
+        return result
+    }
 }

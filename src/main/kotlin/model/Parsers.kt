@@ -1,47 +1,45 @@
 package model.parser
 
-import model.entity.EmptyLesson
-import model.entity.Lesson
-import model.entity.LessonEntity
-import model.entity.Schedule
+import model.entity.*
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
-import java.io.File
 import java.io.IOException
 
 interface Parser {
-
     @Throws(IOException::class)
     fun parse(html: String, name: String): Array<Schedule>
 }
 
 class ScheduleParser(val withName: Boolean = false) : Parser {
 
-    override fun parse(html: String, name: String): Array<Schedule> {
+    override fun parse(html: String, title: String): Array<Schedule> {
         return Jsoup.parse(html)
             .body()
             .select("table")
             .first()!!
             .select("tr[class=\"fon\"], tr[valign=\"top\"]")
             .let {
-                val row = it.get(0)
+                var infos = selectInfos(it)
                 val lessons = multiLayerToOneLayer(it)
-                var infos = selectInfos(row)
-                composeSchedule(lessons, name, infos)
+                composeSchedule(lessons, title, infos)
             }
     }
 
     private fun multiLayerToOneLayer(trs: Elements): Array<Array<LessonEntity>> {
         val lessons = Array(8) { mutableListOf<LessonEntity>() }
-        trs.removeAt(0)
-        // TODO: 18.10.2021 rewrite using reduce where  acc = elements
 
-        trs.forEachIndexed { i, tr ->
+        removeUnnecessary(trs).forEachIndexed { i, tr ->
             lessons[i % 8].addAll(trToLessons(tr))
         }
+
         return rotate90(lessons)
     }
+
+    private fun removeUnnecessary(trs: Elements) =
+        trs.filterIndexed { ind, _ ->
+            ind % 9 != 0
+        }
 
     private fun trToLessons(tr: Element): MutableList<LessonEntity> {
         val list = mutableListOf<LessonEntity>()
@@ -53,11 +51,14 @@ class ScheduleParser(val withName: Boolean = false) : Parser {
 
         for (i in 0..size) {
             val td = tds.get(i)
-            val lesson = tdToLesson(td)
+            var lesson = tdToLesson(td)
 
             if (td.toString().contains("colspan=\"3\"")) { //todo use field attributes
-                val auditorium = (tdToLesson(tds.get(i + 1)) as Lesson).auditorium
-                (lesson as Lesson).auditorium += "/$auditorium" // todo edit
+                val secondHalf = tdToLesson(tds.get(i + 1))
+                lesson = PairLesson(
+                    Pair(lesson, secondHalf)
+                )
+
                 tds.removeAt(i + 1)
                 size = tds.size - 1
             }
@@ -78,11 +79,24 @@ class ScheduleParser(val withName: Boolean = false) : Parser {
             .substring(3, splits.get(0).length - 4)
             .trim { it <= ' ' }
 
-        val teacherName = splits.get(1)
+        var opInfo = splits.get(1)
 
-        val opInfo = splits.get(2)
-        val type = opInfo.substring(0, opInfo.indexOf(','))
-        val auditorium = opInfo.substring(opInfo.indexOf("ауд. ") + 4)
+        val teacherName =
+            if (opInfo.contains(", ")) {
+                opInfo.split(", ")[1]
+            } else {
+                opInfo
+            }
+
+        opInfo = splits.get(2)
+
+        val (type, auditorium) =
+            if (opInfo.contains(", ауд.")) {
+                val tmp = opInfo.split(", ауд.").map { it.trim() }
+                Pair(tmp[0], tmp[1])
+            } else {
+                Pair(opInfo, "")
+            }
 
         return Lesson(
             name,
@@ -107,13 +121,15 @@ class ScheduleParser(val withName: Boolean = false) : Parser {
         return result
     }
 
-    private fun selectInfos(tr: Element): Array<String> =
-        tr.select("td")
-            .apply {
+    private fun selectInfos(tr: Elements): Array<String> =
+        tr.filterIndexed { ind, _ ->
+            ind % 9 == 0
+        }.flatMap {
+            it.select("td").apply {
                 removeAt(0)
             }
-            .map(Element::text)
-            .toTypedArray()
+        }.map(Element::text).toTypedArray()
+
 
     // INFO length of array is number of day in schedule.
     private fun composeSchedule(
@@ -139,12 +155,4 @@ class ScheduleParser(val withName: Boolean = false) : Parser {
             )
         }.toTypedArray()
     }
-
-}
-
-fun main() {
-    val parser = ScheduleParser(true)
-    val html = File("src/test/resources/schedule.html").readText()
-    val schedule = parser.parse(html, "PK-31")
-    schedule.forEach(::println)
 }
