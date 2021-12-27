@@ -16,8 +16,8 @@
         <maven.compiler.source>14</maven.compiler.source>
         <maven.compiler.target>14</maven.compiler.target>
 
-        <url>jdbc:postgresql://127.0.0.1:5432/rea-bot-api-db</url>
-        <username>postgres</username>
+        <url>jdbc:postgresql://localhost:5432/rea-bot-api-db</url>
+        <username>bot-api-admin</username>
         <password>admin</password>
     </properties>
 
@@ -45,7 +45,7 @@
                     <url>${url}</url>
                     <username>${username}</username>
                     <password>${password}</password>
-                    <rollbackCount>1</rollbackCount>
+<!--                    <rollbackCount>1</rollbackCount>-->
                     <!--                    <rollbackDate>2020-06-20</rollbackDate>-->
                     <!--                    <rollbackTag>changelog-2.0</rollbackTag>-->
                 </configuration>
