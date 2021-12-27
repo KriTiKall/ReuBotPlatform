@@ -24,9 +24,9 @@ create table if not exists model.teachers(
 	name varchar(100)
 );
 
-create type model.pair_pos as enum('1', '2', '3', '4', '5', '6', '7', '8');
+create type model.pair_pos as enum('FIRST', 'SECOND', 'THIRD', 'FOURTH', 'FIFTH', 'SIXTH', 'SEVENTH', 'EIGHTH');
 
-create type model.lesson_format as enum('left', 'right', 'full');
+create type model.lesson_format as enum('LEFT', 'RIGHT', 'FULL', 'BOTH');
 
 create table if not exists model.lessons(
 	id serial primary key,
@@ -34,8 +34,8 @@ create table if not exists model.lessons(
 	discipline_id int not null,
 	teacher_id int not null,
 	auditorium varchar(20) not null,
-	position model.pair_pos not null,
-	format model.lesson_format not null,
+	position int not null, -- after show in exam replace on enum
+	format varchar(5) default 'FULL', -- after show in exam replace on enum
 	unique (position, format)
 );
 
