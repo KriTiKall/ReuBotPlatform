@@ -1,6 +1,5 @@
 package model
 
-import data.IScheduleDao
 import model.entity.Schedule
 import model.parser.Parser
 import java.io.BufferedReader
@@ -18,21 +17,6 @@ interface IScheduleService {
     fun saveOrUpdate(schedule: Schedule)
 }
 
-class ScheduleSaveService(
-    private val dao: IScheduleDao
-): IScheduleService {
-
-    override fun saveOrUpdate(schedule: Schedule) {
-        val hash = dao.getHash(schedule.groupName, schedule.date)
-        if (hash == null)
-            dao.save(schedule)
-        else {
-            if (hash != schedule.hashCode()) {
-                dao.update(schedule)
-            }
-        }
-    }
-}
 
 class ScheduleReader(
     private val parser: Parser,

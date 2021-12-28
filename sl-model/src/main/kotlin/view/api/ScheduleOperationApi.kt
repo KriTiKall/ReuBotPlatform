@@ -11,7 +11,7 @@ import model.entity.Schedule
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-private val formatterInSchedule = DateTimeFormatter.ofPattern("dd.MM.yy")
+val formatterInSchedule = DateTimeFormatter.ofPattern("dd.MM.yy")
 
 
 fun Routing.scheduleOperations(service: IScheduleOperations) {

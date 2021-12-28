@@ -1,7 +1,6 @@
 
 import io.ktor.application.*
 import io.ktor.routing.*
-import io.ktor.server.netty.*
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
@@ -28,7 +27,7 @@ fun main(args: Array<String>) {
 //
 //    op.getCurrentSchedule("dsf")
 
-    EngineMain.main(args)
+//    EngineMain.main(args)
 }
 
 fun Application.module(testing: Boolean = false) {
