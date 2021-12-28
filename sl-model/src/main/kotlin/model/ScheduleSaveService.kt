@@ -1,6 +1,5 @@
 package model
 
-import data.DAO
 import data.dao.*
 import model.entity.Lesson
 import model.entity.Schedule
@@ -29,27 +28,31 @@ class ScheduleSaveService(
 
             scheduleDao.create(sch)
 
-            lessons.forEachIndexed{inx, les ->
-                disciplinesDao.getEntityByName(les.n)
-
-                fun save(lesson: Lesson) {
-                    lessonsDao.create(Lessons(
-                        schedule = sch,
-                        discipline =
-                    ))
-                }
-            }
+//            lessons.forEachIndexed{inx, les ->
+//                disciplinesDao.getEntityByName(les.n)
+//
+//                fun save(lesson: Lesson) {
+//                    lessonsDao.create(Lessons(
+//                        schedule = sch,
+//                        discipline =
+//                    ))
+//                }
+//            }
         }
+    }
+
+    private fun update(schedule: Schedule) {
+
     }
 
 
     override fun saveOrUpdate(schedule: Schedule) {
         val hash = scheduleDao.getHash(schedule.groupName, schedule.date)
         if (hash == null)
-            dao.save(schedule)
+            save(schedule)
         else {
             if (hash != schedule.hashCode()) {
-                dao.update(schedule)
+                update(schedule)
             }
         }
     }
@@ -64,12 +67,12 @@ class LessonService(sessionFactory: SessionFactory) {
 
     fun save(lesson: Lesson, schedules: Schedules) {
 
-        if ()
 
-        lessonsDao.create(Lessons(
-            schedule = schedules,
-            discipline =
-        ))
+
+//        lessonsDao.create(Lessons(
+//            schedule = schedules,
+//            discipline =
+//        ))
     }
 
 }

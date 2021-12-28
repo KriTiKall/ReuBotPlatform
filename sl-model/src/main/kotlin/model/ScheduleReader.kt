@@ -17,6 +17,12 @@ interface IScheduleService {
     fun saveOrUpdate(schedule: Schedule)
 }
 
+class ScheduleService : IScheduleService {
+    override fun saveOrUpdate(schedule: Schedule) {
+        TODO("Not yet implemented")
+    }
+}
+
 
 class ScheduleReader(
     private val parser: Parser,
