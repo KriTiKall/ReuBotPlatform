@@ -1,6 +1,5 @@
 package view
 
-import format
 import io.ktor.application.*
 import io.ktor.http.*
 import io.ktor.response.*
@@ -8,6 +7,7 @@ import io.ktor.routing.*
 import kotlinx.serialization.encodeToString
 import model.entity.Lesson
 import model.entity.Schedule
+import model.entity.format
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -20,7 +20,7 @@ fun Routing.scheduleOperations(service: IScheduleOperations) {
     get("/schedule/current") {
         val name = call.request.queryParameters["name"]
         if (name != null) {
-            call.respondText("Wrong parameter. Needs write /schedule/current?name=<group>", status = HttpStatusCode.BadRequest)
+//            call.respondText("Wrong parameter. Needs write /schedule/current?name=<group>", status = HttpStatusCode.BadRequest)
         } else {
             val json = format.encodeToString<Schedule>(service.getCurrentSchedule(name!!))
 
@@ -32,7 +32,7 @@ fun Routing.scheduleOperations(service: IScheduleOperations) {
     get("/schedules") {
         val name = call.request.queryParameters["name"]
         if (name != null) {
-            call.respondText("Wrong parameter. Needs write /schedules?name=<group>", status = HttpStatusCode.BadRequest)
+//            call.respondText("Wrong parameter. Needs write /schedules?name=<group>", status = HttpStatusCode.BadRequest)
         } else {
             val json = format.encodeToString<Array<Schedule>>(service.getSchedules(name!!))
 
@@ -44,7 +44,7 @@ fun Routing.scheduleOperations(service: IScheduleOperations) {
     get("/lesson/next") {
         val name = call.request.queryParameters["name"]
         if (name != null) {
-            call.respondText("Wrong parameter. Needs write /lesson/next?name=<group>", status = HttpStatusCode.BadRequest)
+//            call.respondText("Wrong parameter. Needs write /lesson/next?name=<group>", status = HttpStatusCode.BadRequest)
         } else {
             val json = format.encodeToString<Lesson>(service.getNextLesson(name!!))
 
@@ -59,7 +59,7 @@ fun Routing.scheduleOperations(service: IScheduleOperations) {
         val date = LocalDate.parse(call.request.queryParameters["data"], formatterInSchedule)
 
         if (name != null && date != null) {
-            call.respondText("Wrong parameter. Needs write /schedule?name=<group>>&date=<date>", status = HttpStatusCode.BadRequest)
+//            call.respondText("Wrong parameter. Needs write /schedule?name=<group>>&date=<date>", status = HttpStatusCode.BadRequest)
         } else {
             val json = format.encodeToString<Schedule>(service.getSchedule(name!!, date!!))
             call.respondText(json, status = HttpStatusCode.OK)

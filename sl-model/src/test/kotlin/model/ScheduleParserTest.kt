@@ -1,13 +1,10 @@
 package model
 
-import format
+
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.modules.SerializersModule
-import kotlinx.serialization.modules.polymorphic
-import kotlinx.serialization.modules.subclass
-import model.entity.*
+import model.entity.Schedule
+import model.entity.format
 import model.parser.ScheduleParser
 import org.junit.jupiter.api.Test
 import java.io.File
