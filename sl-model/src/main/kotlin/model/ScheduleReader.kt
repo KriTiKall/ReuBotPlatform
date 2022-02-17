@@ -17,12 +17,6 @@ interface IScheduleService {
     fun saveOrUpdate(schedule: Schedule)
 }
 
-class ScheduleService : IScheduleService {
-    override fun saveOrUpdate(schedule: Schedule) {
-        TODO("Not yet implemented")
-    }
-}
-
 
 class ScheduleReader(
     private val parser: Parser,
@@ -51,7 +45,7 @@ class ScheduleReader(
         }
 
         // to store today's and tomorrow's schedule
-        if (currentTime.minute % 15 == 0) {
+        if (currentTime.minute % 2 == 0) {
             var date = LocalDate.now()
             array = parseSchedule(date)
             array.forEach(service::saveOrUpdate)
