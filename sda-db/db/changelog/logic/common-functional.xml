@@ -12,7 +12,7 @@
         <comment>Создание базы</comment>
         <sqlFile endDelimiter="%%%%%%%%%%%%"
                  relativeToChangelogFile="true"
-                 path="sql/create-all-table.sql"/>
+                 path="sql/01-common-structures.sql"/>
 
         <rollback>
             drop schema model cascade;
