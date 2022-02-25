@@ -50,15 +50,13 @@ create function model.update_schedule(pi_schedule model.schedule,
 as
 $$
 declare
-    p_less          model.lessons_json;
-    p_is_empty      bool;
-    p_is_single     bool;
-    p_hash          int;
-    p_lesson_ref    int;
-    p_group_name_id int;
-    p_schedule_id   int;
-    p_first_id      int;
-    p_second_id     int;
+    p_less         model.lessons_json;
+    p_is_empty     bool;
+    p_is_single    bool;
+    p_hash         int;
+    p_lesson_ref   int;
+    p_r_les_to_sch model.lessons_to_schedules%rowtype;
+    p_schedule_id  int;
 begin
 
     p_less = pi_schedule.lessons;
@@ -67,22 +65,41 @@ begin
     into p_schedule_id
     from model.schedules sch
              join model.group_names gn on gn.id = sch.name_id
-    where gn.name = pi_schedule.name and sch.date = pi_schedule.date;
+    where gn.name = pi_schedule.name
+      and sch.date = pi_schedule.date;
 
     for i in 0..7
         loop
-            p_is_empty := 'true';
             p_hash := (p_less[i] #>> '{hash}')::int; -- save hash
 
+            select *
+            into p_r_les_to_sch
+            from model.lessons_to_schedules
+            where schedule_id = p_schedule_id
+              and position = i
+              and is_actual = 'true';
 
+            if p_hash != p_r_les_to_sch.hash then
+                call model.delete_lesson(p_schedule_id, i);
 
-            if p_is_empty = 'false' then
-                insert into model.lessons_to_schedules(schedule_id, position, lesson_ref_id, hash, is_single)
-                values (p_schedule_id, i, p_lesson_ref, p_hash, p_is_single);
+                update model.lessons_to_schedules
+                set is_actual = 'false'
+                where schedule_id = p_schedule_id
+                  and position = i
+                  and is_actual = 'true';
+
+                select po_lesson_ref, po_is_empty
+                into p_lesson_ref, p_is_empty
+                from model.get_lesson_ref(p_less, i);
+
+                if p_is_empty = 'false' then
+                    insert into model.lessons_to_schedules(schedule_id, position, lesson_ref_id, hash, is_single)
+                    values (p_schedule_id, i, p_lesson_ref, p_hash, p_is_single);
+                end if;
             end if;
         end loop;
 
-    po_result_msg := 'insert_schedule: ok';
+    po_result_msg := 'update_schedule: ok';
 
 exception
     when others
@@ -91,13 +108,61 @@ exception
                 exception_diag text;
             begin
                 get stacked diagnostics exception_diag = pg_exception_context;
-                po_result_msg := 'insert_schedule: status: ' || SQLSTATE || ', ' || SQLERRM || ' CTX:' ||
+                po_result_msg := 'update_schedule: status: ' || SQLSTATE || ', ' || SQLERRM || ' CTX:' ||
                                  exception_diag;
                 return;
             end;
 end;
 $$;
 
+create procedure model.delete_lesson(pi_schedule_id int, pi_position int)
+    language plpgsql
+as
+$$
+declare
+    p_is_single  bool;
+    p_lesson_ref int;
+    p_first_id   int;
+    p_second_id  int;
+begin
+    select is_single, lesson_ref_id
+    into p_is_single, p_lesson_ref
+    from model.lessons_to_schedules
+    where schedule_id = pi_schedule_id
+      and position = pi_position
+      and is_actual = 'false';
+
+    delete
+    from model.lessons_to_schedules
+    where schedule_id = pi_schedule_id
+      and position = pi_position
+      and is_actual = 'false';
+
+    if p_is_single = 'true' then
+        delete
+        from model.lessons
+        where id = p_lesson_ref;
+    else
+        select first_lesson_id, second_lesson_id
+        into p_first_id, p_second_id
+        from model.pair_lesson
+        where id = p_lesson_ref;
+
+        delete
+        from model.pair_lesson
+        where id = p_lesson_ref;
+
+        delete
+        from model.lessons
+        where id = p_first_id;
+
+        delete
+        from model.lessons
+        where id = p_second_id;
+    end if;
+
+end;
+$$;
 
 create function model.insert_schedule(pi_schedule model.schedule,
                                       out po_result_msg text)
@@ -129,38 +194,11 @@ begin
 
     for i in 0..7
         loop
-            p_is_empty := 'true';
             p_hash := (p_less[i] #>> '{hash}')::int; -- save hash
 
-            if p_less[i] ->> 'type' = 'model.entity.PairLesson' then
-                --              is single flag (false)
-                p_is_single := 'false';
-
-                if p_less[i] #>> '{pair,first,type}' != 'Empty' then
-                    select model.insert_lesson(p_less[i], 'pair,first') into p_first_id;
-                    p_is_empty := 'false';
-                else
-                    p_first_id := null;
-                end if;
-
-                if p_less[i] #>> '{pair,second,type}' != 'Empty' then
-                    select model.insert_lesson(p_less[i], 'pair,second') into p_second_id;
-                    p_is_empty := 'false';
-                else
-                    p_second_id := null;
-                end if;
-
-                insert into model.pair_lesson values (p_first_id, p_second_id);
-                select currval(pg_get_serial_sequence('model.pair_lesson', 'id')) into p_lesson_ref;
-            else
---               is single flag (true)
-                p_is_single = 'true';
-
-                if p_less[i] #>> '{lesson,type}' != 'Empty' then
-                    select model.insert_lesson(p_less[i], 'lesson') into p_lesson_ref;
-                    p_is_empty := 'false';
-                end if;
-            end if;
+            select po_lesson_ref, po_is_empty
+            into p_lesson_ref, p_is_empty
+            from model.get_lesson_ref(p_less, i);
 
             if p_is_empty = 'false' then
                 insert into model.lessons_to_schedules(schedule_id, position, lesson_ref_id, hash, is_single)
@@ -181,6 +219,50 @@ exception
                                  exception_diag;
                 return;
             end;
+end;
+$$;
+
+create function model.get_lesson_ref(pi_less model.lessons_json, pi_position text, out po_lesson_ref int,
+                                     out po_is_empty bool)
+    language plpgsql
+as
+$$
+declare
+    p_is_single bool;
+    p_first_id  int;
+    p_second_id int;
+begin
+    po_is_empty := 'true';
+
+    if pi_less[pi_position] ->> 'type' = 'model.entity.PairLesson' then
+        --              is single flag (false)
+        p_is_single := 'false';
+
+        if pi_less[pi_position] #>> '{pair,first,type}' != 'Empty' then
+            select model.insert_lesson(pi_less[pi_position], 'pair,first') into p_first_id;
+            po_is_empty := 'false';
+        else
+            p_first_id := null;
+        end if;
+
+        if pi_less[pi_position] #>> '{pair,second,type}' != 'Empty' then
+            select model.insert_lesson(pi_less[pi_position], 'pair,second') into p_second_id;
+            po_is_empty := 'false';
+        else
+            p_second_id := null;
+        end if;
+
+        insert into model.pair_lesson values (p_first_id, p_second_id);
+        select currval(pg_get_serial_sequence('model.pair_lesson', 'id')) into po_lesson_ref;
+    else
+--               is single flag (true)
+        p_is_single = 'true';
+
+        if pi_less[pi_position] #>> '{lesson,type}' != 'Empty' then
+            select model.insert_lesson(pi_less[pi_position], 'lesson') into po_lesson_ref;
+            po_is_empty := 'false';
+        end if;
+    end if;
 end;
 $$;
 

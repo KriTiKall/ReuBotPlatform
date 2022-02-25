@@ -56,7 +56,7 @@
                             <!--                            <goal>updateSQL</goal>-->
                             <goal>update</goal>
                             <!--                            <goal>generateChangeLog</goal>-->
-                            <!--                            <goal>rollback</goal>-->
+<!--                                                        <goal>rollback</goal>-->
                         </goals>
                     </execution>
                 </executions>

@@ -11,5 +11,5 @@
         <dbms type="postgresql"/>
     </preConditions>
 
-    <include file="changelog/init/database-init.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/logic/common-functional.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>
