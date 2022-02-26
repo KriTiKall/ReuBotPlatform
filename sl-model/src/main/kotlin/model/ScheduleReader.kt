@@ -1,9 +1,8 @@
 package model
 
-import dao.IScheduleDao
+import data.dao.IScheduleDao
 import model.entity.Schedule
 import model.parser.Parser
-import model.parser.ScheduleParser
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.URL

@@ -1,6 +1,5 @@
 package model.parser
 
-import com.google.common.util.concurrent.Service
 import model.entity.EmptyLesson
 import model.entity.Lesson
 import model.entity.LessonEntity
@@ -8,7 +7,6 @@ import model.entity.Schedule
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
-import java.io.File
 import java.io.IOException
 
 interface Parser {
