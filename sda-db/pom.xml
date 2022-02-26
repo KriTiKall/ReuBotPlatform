@@ -45,18 +45,17 @@
                     <url>${url}</url>
                     <username>${username}</username>
                     <password>${password}</password>
-<!--                    <rollbackCount>1</rollbackCount>-->
-                    <!--                    <rollbackDate>2020-06-20</rollbackDate>-->
-                    <!--                    <rollbackTag>changelog-2.0</rollbackTag>-->
+                    <!--                            uncomment it to rollback-->
+                    <!--                    <rollbackCount>2</rollbackCount>-->
                 </configuration>
                 <executions>
                     <execution>
                         <phase>process-resources</phase>
                         <goals>
-                            <!--                            <goal>updateSQL</goal>-->
+                            <!--                            uncomment it to update-->
                             <goal>update</goal>
-                            <!--                            <goal>generateChangeLog</goal>-->
-<!--                                                        <goal>rollback</goal>-->
+                            <!--                            uncomment it to rollback-->
+                            <!--                            <goal>rollback</goal>-->
                         </goals>
                     </execution>
                 </executions>

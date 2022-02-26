@@ -1,18 +1,16 @@
 package model
 
 import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.encodeToJsonElement
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
 import kotlinx.serialization.modules.subclass
-import model.entity.EmptyLesson
-import model.entity.Lesson
-import model.entity.LessonEntity
-import model.entity.Schedule
+import model.entity.*
 import model.parser.ScheduleParser
 import org.junit.jupiter.api.Test
 import java.io.File
-import java.time.LocalDate
 import kotlin.test.assertEquals
 
 val module = SerializersModule {
@@ -22,7 +20,12 @@ val module = SerializersModule {
     }
 }
 
-val format = Json { serializersModule = module }
+val format = Json {
+    serializersModule = module
+//    prettyPrint = true
+    ignoreUnknownKeys = true
+    encodeDefaults = true
+}
 
 object TestConstants {
     const val HTML_PATH = "src/test/resources/schedule.html"

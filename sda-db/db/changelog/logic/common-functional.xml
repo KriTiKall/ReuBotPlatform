@@ -7,15 +7,27 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd
     http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.9.xsd ">
 
-    <changeSet id="init-db" author="grigoriev" dbms="postgresql">
-
-        <comment>Создание базы</comment>
+    <changeSet id="init-db" author="geniyc" dbms="postgresql">
+        <comment>Создание основных таблиц и структур</comment>
         <sqlFile endDelimiter="%%%%%%%%%%%%"
                  relativeToChangelogFile="true"
                  path="sql/01-common-structures.sql"/>
 
         <rollback>
             drop schema model cascade;
+        </rollback>
+    </changeSet>
+
+    <changeSet id="common-function" author="geniyc" dbms="postgresql">
+        <comment>Создание основных функций, процедур</comment>
+        <sqlFile endDelimiter="%%%%%%%%%%%%"
+                 relativeToChangelogFile="true"
+                 path="sql/02-common-functions.sql"/>
+
+        <rollback>
+            <sqlFile endDelimiter="%%%%%%%%%%%%"
+                     relativeToChangelogFile="true"
+                     path="sql/02-common-functions-rollback.sql"/>
         </rollback>
     </changeSet>
 </databaseChangeLog>

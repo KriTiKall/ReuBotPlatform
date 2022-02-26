@@ -43,7 +43,6 @@ exception
 end;
 $$;
 
-
 create function model.update_schedule(pi_schedule model.schedule,
                                       out po_result_msg text)
     language plpgsql
