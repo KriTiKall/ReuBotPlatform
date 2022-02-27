@@ -1,6 +1,5 @@
 package model
 
-import data.dao.IScheduleDao
 import model.entity.Schedule
 import model.parser.Parser
 import java.io.BufferedReader
@@ -13,28 +12,25 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 import java.util.stream.Collectors
 
+interface IScheduleService {
+
+    fun saveOrUpdate(schedule: Schedule)
+}
+
+
 class ScheduleReader(
     private val parser: Parser,
-    private val dao: IScheduleDao
+    private val service: IScheduleService
 ) : Runnable {
 
     private val formatterInURL = DateTimeFormatter.ofPattern("yyyy.MM.dd")
     private val formatterInSchedule = DateTimeFormatter.ofPattern("dd.MM.yy")
 
-    //        Calendar cal = Calendar.getInstance();
-    //        Date input = cal.getTime();
-    //        LocalDate la = input.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
-
-    //    val c = Calendar.getInstance();
-    //    c.setTime(sdf.parse(str));
-    //    c.add(Calendar.DATE, 1);
+    private var readed = false
 
     override fun run() {
-        var currentTime = LocalTime.now()
+        val currentTime = LocalTime.now()
         var array: Array<Schedule>
-        var readed = false
-
-
 
         // every day in 5 am parsing timetable on week forward
         if (currentTime.hour == 5 && !readed) {
@@ -42,23 +38,25 @@ class ScheduleReader(
             date += 2
             for (i in 2..8) {
                 array = parseSchedule(date)
-                array.forEach(this::read)
+                array.forEach(service::saveOrUpdate)
                 date++
             }
+            readed = true
         }
 
+        // to store today's and tomorrow's schedule
+        if (currentTime.minute % 2 == 0) {
+            var date = LocalDate.now()
+            array = parseSchedule(date)
+            array.forEach(service::saveOrUpdate)
 
+            date++
+            array = parseSchedule(date)
+            array.forEach(service::saveOrUpdate)
+        }
 
-    }
-
-    private fun read(schedule: Schedule) {
-        val hash = dao.getHash(schedule.groupName, schedule.date)
-        if (hash == null)
-            dao.save(schedule)
-        else {
-            if (hash != schedule.hashCode()) {
-                dao.update(schedule)
-            }
+        if (currentTime.hour == 6 && readed) {
+            readed = false
         }
     }
 
@@ -102,10 +100,3 @@ private operator fun LocalDate.plus(i: Int): LocalDate {
     increment.add(Calendar.DATE, i)
     return increment.time.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
 }
-
-
-//private operator fun LocalDate.plusAssign(add: Int) {
-//    increment.time = Date.from(this.atStartOfDay(ZoneId.systemDefault()).toInstant())
-//    increment.add(Calendar.DATE, add)
-//    this = increment.time.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
-//}

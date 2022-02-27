@@ -1,9 +1,6 @@
 package model.parser
 
-import model.entity.EmptyLesson
-import model.entity.Lesson
-import model.entity.LessonEntity
-import model.entity.Schedule
+import model.entity.*
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
@@ -29,8 +26,8 @@ class ScheduleParser(val withName: Boolean = false) : Parser {
             }
     }
 
-    private fun multiLayerToOneLayer(trs: Elements): Array<Array<LessonEntity>> {
-        val lessons = Array(8) { mutableListOf<LessonEntity>() }
+    private fun multiLayerToOneLayer(trs: Elements): Array<Array<Indivisible>> {
+        val lessons = Array(8) { mutableListOf<Indivisible>() }
 
         removeUnnecessary(trs).forEachIndexed { i, tr ->
             lessons[i % 8].addAll(trToLessons(tr))
@@ -44,8 +41,8 @@ class ScheduleParser(val withName: Boolean = false) : Parser {
             ind % 9 != 0
         }
 
-    private fun trToLessons(tr: Element): MutableList<LessonEntity> { //todo rewrite using pairLesson
-        val list = mutableListOf<LessonEntity>()
+    private fun trToLessons(tr: Element): MutableList<Indivisible> {
+        val list = mutableListOf<Indivisible>()
 
         val tds = tr.select("td").apply {
             removeAt(0)
@@ -54,35 +51,18 @@ class ScheduleParser(val withName: Boolean = false) : Parser {
 
         for (i in 0..size) {
             val td = tds.get(i)
-            val lesson = tdToLesson(td)
+            var type = tdToLesson(td)
+            var lesson: Indivisible = SingleLesson(type)
+
 
             if (td.toString().contains("colspan=\"3\"")) { //todo use field attributes
-                val half = tdToLesson(tds.get(i + 1)) // todo edit all lesson field
-                var firstAud: String
-                var secondAud: String
-                var rm = 1
+                val secondType = tdToLesson(tds.get(i + 1))
 
-                if (lesson is Lesson) {
-                    firstAud = lesson.auditorium
+                lesson = PairLesson(
+                    Pair(type, secondType)
+                )
 
-                    if (half is Lesson)
-                        secondAud = half.auditorium
-                    else
-                        secondAud = half.toString()
-
-                    lesson.auditorium = "$firstAud/$secondAud" // "305 он-лайн д/307 он-лайн д"
-                } else {
-                    firstAud = lesson.toString()
-
-                    if (half is Lesson) {
-                        secondAud = half.auditorium
-                        half.auditorium = "$firstAud/$secondAud"
-                        rm = 0
-                    } else
-                        secondAud = half.toString()
-                }
-
-                tds.removeAt(i + rm)
+                tds.removeAt(i + 1)
                 size = tds.size - 1
             }
             list.add(lesson)
@@ -129,15 +109,14 @@ class ScheduleParser(val withName: Boolean = false) : Parser {
         )
     }
 
-    private fun rotate90(lessons: Array<MutableList<LessonEntity>>): Array<Array<LessonEntity>> {
-        val result = Array(lessons[0].size) { Array<LessonEntity>(lessons.size) { EmptyLesson() } }
-        var lesson: LessonEntity
+    private fun rotate90(lessons: Array<MutableList<Indivisible>>): Array<Array<Indivisible>> {
+        val result = Array(lessons[0].size) { Array<Indivisible>(lessons.size) { SingleLesson(EmptyLesson()) } }
+        var lesson: Indivisible
 
         for (i in result.indices) {
             for (j in result[0].indices) {
                 lesson = lessons[j].get(i)
-                if (lesson !is EmptyLesson)
-                    result[i][j] = lesson
+                result[i][j] = lesson
             }
 
         }
@@ -156,7 +135,7 @@ class ScheduleParser(val withName: Boolean = false) : Parser {
 
     // INFO length of array is number of day in schedule.
     private fun composeSchedule(
-        lessons: Array<Array<LessonEntity>>,
+        lessons: Array<Array<Indivisible>>,
         data: String,
         infos: Array<String>
     ): Array<Schedule> {
