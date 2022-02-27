@@ -19,7 +19,12 @@ val module = SerializersModule {
     }
 }
 
-val format = Json { serializersModule = module }
+val format = Json {
+    serializersModule = module
+//    prettyPrint = true
+    ignoreUnknownKeys = true
+    encodeDefaults = true
+}
 
 interface LessonEntity {
     fun isEmpty() = true
@@ -31,7 +36,7 @@ interface Indivisible {
 
 @Serializable
 @SerialName("Empty")
-class EmptyLesson(): LessonEntity {
+class EmptyLesson() : LessonEntity {
 
     override fun toString() = "Empty"
 
@@ -53,7 +58,7 @@ data class Lesson(
     @SerialName("LessonType")
     val type: String = "",
     var auditorium: String = ""
-): LessonEntity {
+) : LessonEntity {
 
     override fun isEmpty() = false
 }
