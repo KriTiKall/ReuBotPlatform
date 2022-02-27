@@ -1,13 +1,10 @@
 package model
 
-import model.entity.Lesson
-import model.entity.Schedule
-import java.util.*
-
-interface ScheduleOperations {
-
-     fun getCurrentSchedule(groupName: String): Schedule
-     fun getSchedules(groupName: String?): Array<Schedule>
-     fun getNextLesson(groupName: String): Lesson
-     fun getSchedule(groupName: String, date: Date): Schedule
-}
+//interface IScheduleDao {
+//
+//     fun save(schedule: Schedule)
+//
+//     fun getHash(groupName: String, date: String): Int?
+//
+//     fun update(schedule: Schedule)
+//}

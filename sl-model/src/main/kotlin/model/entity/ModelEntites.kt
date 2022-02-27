@@ -1,11 +1,31 @@
 package model.entity
 
+
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.modules.SerializersModule
+import kotlinx.serialization.modules.polymorphic
+import kotlinx.serialization.modules.subclass
+
+val module = SerializersModule {
+    polymorphic(LessonEntity::class) {
+        subclass(EmptyLesson::class)
+        subclass(Lesson::class)
+    }
+    polymorphic(Indivisible::class) {
+        subclass(SingleLesson::class)
+        subclass(PairLesson::class)
+    }
+}
+
+val format = Json { serializersModule = module }
 
 interface LessonEntity {
-
     fun isEmpty() = true
+}
+
+interface Indivisible {
     fun isIndivisible() = true
 }
 
@@ -39,11 +59,17 @@ data class Lesson(
 }
 
 @Serializable
-data class PairLesson(
-    val pair: Pair<LessonEntity, LessonEntity>
-) : LessonEntity {
+data class SingleLesson(
 
-    override fun isEmpty() = false
+    val lesson: LessonEntity
+) : Indivisible
+
+@Serializable
+data class PairLesson(
+
+    val pair: Pair<LessonEntity, LessonEntity>
+) : Indivisible {
+
     override fun isIndivisible() = false
 }
 
@@ -51,7 +77,7 @@ data class PairLesson(
 data class Schedule(
     var groupName: String,
     var date: String,
-    var lessons: Array<LessonEntity>
+    var lessons: Array<Indivisible>
 ) {
     init {
         if (lessons.size != 8)
