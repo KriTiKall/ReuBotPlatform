@@ -1,0 +1,91 @@
+[
+  {
+    "lesson": {
+      "type": "model.entity.Lesson",
+      "name": "Имя",
+      "teacherName": "Учитель",
+      "LessonType": "пркатика",
+      "auditorium": "200"
+    }
+  },
+  {
+    "lesson": {
+      "type": "model.entity.SingleLesson",
+      "lesson": {
+        "type": "model.entity.Lesson",
+        "name": "Имя",
+        "teacherName": "Учитель",
+        "LessonType": "пркатика",
+        "auditorium": "200"
+      }
+    },
+    "hash": -1783157156
+  },
+  {
+    "pair": {
+      "first": {
+        "type": "model.entity.Lesson",
+        "name": "Имя",
+        "teacherName": "Учитель",
+        "LessonType": "пркатика",
+        "auditorium": "200"
+      },
+      "second": {
+        "type": "model.entity.Lesson",
+        "name": "Имя",
+        "teacherName": "Учитель",
+        "LessonType": "пркатика",
+        "auditorium": "200"
+      }
+    }
+  },
+  {
+    "lesson": {
+      "type": "model.entity.PairLesson",
+      "pair": {
+        "first": {
+          "type": "model.entity.Lesson",
+          "name": "Имя",
+          "teacherName": "Учитель",
+          "LessonType": "пркатика",
+          "auditorium": "200"
+        },
+        "second": {
+          "type": "model.entity.Lesson",
+          "name": "Имя",
+          "teacherName": "Учитель",
+          "LessonType": "пркатика",
+          "auditorium": "200"
+        }
+      }
+    },
+    "hash": -1226454144
+  },
+  {
+    "lesson": {
+      "type": "model.entity.SingleLesson",
+      "lesson": {
+        "type": "Empty"
+      }
+    },
+    "hash": 110992469
+  },
+  {
+    "lesson": {
+      "type": "model.entity.PairLesson",
+      "pair": {
+        "first": {
+          "type": "Empty"
+        },
+        "second": {
+          "type": "model.entity.Lesson",
+          "name": "Имя",
+          "teacherName": "Учитель",
+          "LessonType": "пркатика",
+          "auditorium": "200"
+        }
+      }
+    },
+    "hash": -1226454144
+  }
+]

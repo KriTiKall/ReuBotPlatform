@@ -69,7 +69,7 @@ create table if not exists model.disciplines
     id   serial primary key,
     name text
 );
-
+-- dont use
 create table if not exists model.teacher_posts
 (
     id   serial primary key,
@@ -79,6 +79,6 @@ create table if not exists model.teacher_posts
 create table if not exists model.teachers
 (
     id      serial primary key,
-    post_id int,
+    post_id int default null,
     name    varchar(80)
 );

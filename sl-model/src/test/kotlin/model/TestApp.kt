@@ -19,7 +19,7 @@ class TestSendIfoScheduleService : IScheduleService {
 
     private lateinit var first: Schedule
 
-    override fun saveOrUpdate(schedule: Schedule) {
+    override fun saveOrUpdate(schedule: Schedule): Boolean {
         var status = ""
         var count = schedule
         var msg = ""
@@ -30,11 +30,13 @@ class TestSendIfoScheduleService : IScheduleService {
             msg = "First Schedule has ${first} members. Second has "
         }
         println(msg)
+        return true
     }
 }
 
 class TestScheduleService : IScheduleService {
-    override fun saveOrUpdate(schedule: Schedule) {
+    override fun saveOrUpdate(schedule: Schedule): Boolean {
         println(schedule)
+        return true
     }
 }
