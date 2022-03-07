@@ -7,12 +7,14 @@ create function model.insert_or_update_schedule(pi_schedule model.schedule, out 
 as
 $$
 declare
-    schedule_id   int;
-    schedule_hash int;
-    result_test   text;
+    schedule_id   int  = -1;
+    schedule_hash int  = -1;
+    result_test   text = '';
+    action        text = '';
 begin
 
-    select into schedule_id id, schedule_hash hash
+    select sch.id, hash
+    into schedule_id, schedule_hash
     from model.schedules sch
              join model.group_names gn on gn.id = sch.name_id
     where date = pi_schedule.date
@@ -20,14 +22,19 @@ begin
 
     if FOUND then
         if schedule_hash != pi_schedule.hash then
-            select model.insert_schedule(pi_schedule) into result_test;
+            action := 'update';
+            select model.update_schedule(pi_schedule) into result_test;
+        else
+            action := 'didnt changed';
         end if;
     else
+        action := 'insert';
         select model.insert_schedule(pi_schedule) into result_test;
     end if;
 
-    po_result_msg := result_test || ', ok';
-
+    po_result_msg =action || ', ' || result_test || ', ok, '
+                       || pi_schedule.date || ', ' ||
+                   pi_schedule.name;
 exception
     when others
         then
