@@ -1,4 +1,4 @@
-package model.entity
+package com.example.model.entity
 
 
 import kotlinx.serialization.SerialName
@@ -8,7 +8,7 @@ import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
 import kotlinx.serialization.modules.subclass
 
-val module = SerializersModule {
+val jsonStrict = SerializersModule {
     polymorphic(LessonEntity::class) {
         subclass(EmptyLesson::class)
         subclass(Lesson::class)
@@ -20,7 +20,7 @@ val module = SerializersModule {
 }
 
 val format = Json {
-    serializersModule = module
+    serializersModule = jsonStrict
 //    prettyPrint = true
     ignoreUnknownKeys = true
     encodeDefaults = true
@@ -89,7 +89,7 @@ data class Schedule(
             throw RuntimeException("The array of lesson have not 8 elements(size=${lessons.size})")
     }
 
-    constructor() : this("", "", emptyArray())
+    constructor() : this("", "", Array(8) {SingleLesson(EmptyLesson())})
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

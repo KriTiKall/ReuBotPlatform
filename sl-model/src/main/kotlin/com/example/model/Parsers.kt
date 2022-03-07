@@ -1,6 +1,6 @@
-package model.parser
+package com.example.model.parser
 
-import model.entity.*
+import com.example.model.entity.*
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 import org.jsoup.select.Elements

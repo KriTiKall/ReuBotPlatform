@@ -1,12 +1,11 @@
-package model
+package com.example.model
 
 
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
-import model.entity.Schedule
-import model.entity.format
-import model.parser.ScheduleParser
-import org.junit.jupiter.api.Test
+import com.example.model.entity.Schedule
+import com.example.model.entity.format
+import com.example.model.parser.ScheduleParser
 import java.io.File
 import kotlin.test.assertEquals
 

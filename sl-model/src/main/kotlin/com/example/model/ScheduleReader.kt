@@ -1,7 +1,7 @@
-package model
+package com.example.model
 
-import model.entity.Schedule
-import model.parser.Parser
+import com.example.model.entity.Schedule
+import com.example.model.parser.Parser
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.URL

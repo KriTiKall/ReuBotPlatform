@@ -8,11 +8,11 @@
         <property name="dialect">org.hibernate.dialect.PostgreSQL94Dialect</property>
         <property name="show_sql">true</property>
 
-        <mapping class="data.dao.Lessons" />
-        <mapping class="data.dao.Disciplines" />
-        <mapping class="data.dao.Schedules" />
-        <mapping class="data.dao.Teachers" />
-        <mapping class="data.dao.TeacherPosts" />
-        <mapping class="data.dao.ScheduleUpdates" />
+        <mapping class="com.example.data.dao.Lessons" />
+        <mapping class="com.example.data.dao.Disciplines" />
+        <mapping class="com.example.data.dao.Schedules" />
+        <mapping class="com.example.data.dao.Teachers" />
+        <mapping class="com.example.data.dao.TeacherPosts" />
+        <mapping class="com.example.data.dao.ScheduleUpdates" />
     </session-factory>
 </hibernate-configuration>

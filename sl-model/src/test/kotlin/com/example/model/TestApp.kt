@@ -1,7 +1,7 @@
-package model
+package com.example.model
 
-import model.entity.Schedule
-import model.parser.ScheduleParser
+import com.example.model.entity.Schedule
+import com.example.model.parser.ScheduleParser
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
