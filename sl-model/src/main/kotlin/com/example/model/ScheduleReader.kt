@@ -14,7 +14,7 @@ import java.util.stream.Collectors
 
 interface IScheduleService {
 
-    fun saveOrUpdate(schedule: Schedule)
+    fun saveOrUpdate(schedule: Schedule): Boolean
 }
 
 
@@ -60,7 +60,7 @@ class ScheduleReader(
         }
     }
 
-    private fun parseSchedule(date: LocalDate): Array<Schedule> {
+    fun parseSchedule(date: LocalDate): Array<Schedule> { // todo make private
         val html = getHtml(date)
 
         return parser.parse(html, getFormatDate(date))
@@ -99,4 +99,11 @@ private operator fun LocalDate.plus(i: Int): LocalDate {
     increment.time = Date.from(this.atStartOfDay(ZoneId.systemDefault()).toInstant())
     increment.add(Calendar.DATE, i)
     return increment.time.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+}
+
+class MockScheduleService : IScheduleService {
+    override fun saveOrUpdate(schedule: Schedule): Boolean {
+        println(schedule)
+        return true
+    }
 }

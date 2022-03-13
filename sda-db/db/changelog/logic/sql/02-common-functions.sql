@@ -2,7 +2,7 @@
 ------- functions by update                           ---------
 ---------------------------------------------------------------
 
-create function model.insert_or_update_schedule(pi_schedule model.schedule, out po_result_msg text)
+create function model.insert_or_update_schedule(pi_schedule model.schedule, out po_result_msg text, out po_action text)
     language plpgsql
 as
 $$
@@ -32,6 +32,8 @@ begin
         select model.insert_schedule(pi_schedule) into result_test;
     end if;
 
+    po_action := action;
+
     po_result_msg =action || ', ' || result_test || ', ok, '
                        || pi_schedule.date || ', ' ||
                    pi_schedule.name;
@@ -49,7 +51,7 @@ exception
 end;
 $$;
 
-create function model.update_schedule(pi_schedule model.schedule,
+create or replace function model.update_schedule(pi_schedule model.schedule,
                                       out po_result_msg text)
     language plpgsql
 as
@@ -73,7 +75,9 @@ begin
     where gn.name = pi_schedule.name
       and sch.date = pi_schedule.date;
 
-    for i in 0..7
+    RAISE NOTICE 'update';
+
+    for i in 1..8
         loop
             p_hash := (p_less[i] #>> '{hash}')::int; -- save hash
 
@@ -84,8 +88,12 @@ begin
               and position = i
               and is_actual = 'true';
 
-            if p_hash != p_r_les_to_sch.hash then
+            RAISE NOTICE 'Вызов функции(%) hash = %, lesson = %, | %', i, p_hash, p_r_les_to_sch.hash, p_hash != coalesce(p_r_les_to_sch.hash, 1987375157);
+-- 1987375157 = empty lesson
+            if p_hash != coalesce(p_r_les_to_sch.hash, 1987375157) then
                 call model.delete_lesson(p_schedule_id, i);
+
+                RAISE NOTICE 'hash';
 
                 update model.lessons_to_schedules
                 set is_actual = 'false'
@@ -95,7 +103,9 @@ begin
 
                 select po_lesson_ref, po_is_empty, po_is_single
                 into p_lesson_ref, p_is_empty, p_is_single
-                from model.get_lesson_ref(p_less[i]);
+                from model.get_lesson_ref(p_less[i]); -- array in postgrs start from 1
+
+                RAISE NOTICE 'hash ref = %, empty = %, single = % , json = %', p_lesson_ref, p_is_empty, p_is_single, p_less[i];
 
                 if p_is_empty = 'false' then
                     insert into model.lessons_to_schedules(schedule_id, position, lesson_ref_id, hash, is_single)
@@ -287,6 +297,15 @@ declare
     p_discipline_id   int;
     p_discipline_name text;
 begin
+
+    -- is exists discipline
+    p_discipline_name = pi_lesson #>> ('{' || pi_path || ',name}')::text[];
+    select id into p_discipline_id from model.disciplines where name = p_discipline_name;
+    if not FOUND then
+        insert into model.disciplines(name) values (p_discipline_name);
+        select currval(pg_get_serial_sequence('model.disciplines', 'id')) into p_discipline_id;
+    end if;
+
     -- will implement in next release
     -- if not exist create new
     -- is exists teacher post
@@ -305,16 +324,8 @@ begin
         select currval(pg_get_serial_sequence('model.teachers', 'id')) into p_teacher_id;
     end if;
 
-    -- is exists discipline
-    p_discipline_name = pi_lesson #>> ('{' || pi_path || ',name}')::text[];
-    select id into p_discipline_id from model.disciplines where name = p_discipline_name;
-    if not FOUND then
-        insert into model.disciplines(name) values (p_discipline_name);
-        select currval(pg_get_serial_sequence('model.disciplines', 'id')) into p_discipline_id;
-    end if;
-
-    insert into model.lessons(discipline_id, teacher_id, auditorium)
-    values (p_discipline_id, p_teacher_id, pi_lesson #>> ('{' || pi_path || ',auditorium}')::text[]);
+    insert into model.lessons(discipline_id, teacher_id, type, auditorium)
+    values (p_discipline_id, p_teacher_id, pi_lesson #>> ('{' || pi_path || ',lessonType}')::text[], pi_lesson #>> ('{' || pi_path || ',auditorium}')::text[]);
 
     select currval(pg_get_serial_sequence('model.lessons', 'id')) into po_id;
 end;

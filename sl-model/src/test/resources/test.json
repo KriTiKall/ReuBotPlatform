@@ -1,0 +1,341 @@
+[
+  {
+    "lesson": {
+      "type": "Lesson",
+      "name": "Имя",
+      "teacherName": "Учитель",
+      "lessonType": "пркатика",
+      "auditorium": "200"
+    }
+  },
+  {
+    "lesson": {
+      "type": "SingleLesson",
+      "lesson": {
+        "type": "Lesson",
+        "name": "Имя",
+        "teacherName": "Учитель",
+        "lessonType": "пркатика",
+        "auditorium": "200"
+      }
+    },
+    "hash": -1783157156
+  },
+  {
+    "pair": {
+      "first": {
+        "type": "Lesson",
+        "name": "Имя",
+        "teacherName": "Учитель",
+        "lessonType": "пркатика",
+        "auditorium": "200"
+      },
+      "second": {
+        "type": "Lesson",
+        "name": "Имя",
+        "teacherName": "Учитель",
+        "lessonType": "пркатика",
+        "auditorium": "200"
+      }
+    }
+  },
+  {
+    "lesson": {
+      "type": "PairLesson",
+      "pair": {
+        "first": {
+          "type": "Lesson",
+          "name": "Имя",
+          "teacherName": "Учитель",
+          "lessonType": "пркатика",
+          "auditorium": "200"
+        },
+        "second": {
+          "type": "Lesson",
+          "name": "Имя",
+          "teacherName": "Учитель",
+          "lessonType": "пркатика",
+          "auditorium": "200"
+        }
+      }
+    },
+    "hash": -1226454144
+  },
+  {
+    "lesson": {
+      "type": "SingleLesson",
+      "lesson": {
+        "type": "Empty"
+      }
+    },
+    "hash": 110992469
+  },
+  {
+    "lesson": {
+      "type": "PairLesson",
+      "pair": {
+        "first": {
+          "type": "Empty"
+        },
+        "second": {
+          "type": "Lesson",
+          "name": "Имя",
+          "teacherName": "Учитель",
+          "lessonType": "пркатика",
+          "auditorium": "200"
+        }
+      }
+    },
+    "hash": -1226454144
+  },
+  {
+    "groupName": "12.03.22",
+    "date": "БДо-11",
+    "lessons": [
+      {
+        "type": "SingleLesson",
+        "lesson": {
+          "type": "Lesson",
+          "name": "История",
+          "teacherName": "Жданкова И.В.",
+          "lessonType": "лекция",
+          "auditorium": "ZOOM онлайн"
+        }
+      },
+      {
+        "type": "SingleLesson",
+        "lesson": {
+          "type": "Lesson",
+          "name": "История",
+          "teacherName": "Жданкова И.В.",
+          "lessonType": "лекция",
+          "auditorium": "ZOOM онлайн"
+        }
+      },
+      {
+        "type": "SingleLesson",
+        "lesson": {
+          "type": "Empty"
+        }
+      },
+      {
+        "type": "SingleLesson",
+        "lesson": {
+          "type": "Empty"
+        }
+      },
+      {
+        "type": "SingleLesson",
+        "lesson": {
+          "type": "Empty"
+        }
+      },
+      {
+        "type": "SingleLesson",
+        "lesson": {
+          "type": "Empty"
+        }
+      },
+      {
+        "type": "SingleLesson",
+        "lesson": {
+          "type": "Empty"
+        }
+      },
+      {
+        "type": "SingleLesson",
+        "lesson": {
+          "type": "Empty"
+        }
+      }
+    ]
+  },
+  [
+    '{"lesson":{"type":"SingleLesson","lesson":{"type":"Lesson","name":"Иностранный язык","teacherName":"Осколкова","LessonType":"практика","auditorium":"Moodle"}},"hash":-1602058481}',
+    '{"lesson":{"type":"SingleLesson","lesson":{"type":"Empty"}},"hash":1987375157}',
+    '{"lesson":{"type":"SingleLesson","lesson":{"type":"Lesson","name":"Иностранный язык","teacherName":"Осколкова В.Р.","LessonType":"практика","auditorium":"Moodle"}},"hash":-1602058482}',
+    '{"lesson":{"type":"SingleLesson","lesson":{"type":"Empty"}},"hash":1987375157}',
+    '{"lesson":{"type":"SingleLesson","lesson":{"type":"Empty"}},"hash":1987375157}',
+    '{"lesson":{"type":"SingleLesson","lesson":{"type":"Empty"}},"hash":1987375157}',
+    '{"lesson":{"type":"SingleLesson","lesson":{"type":"Empty"}},"hash":1987375157}',
+    '{"lesson":{"type":"SingleLesson","lesson":{"type":"Empty"}},"hash":1987375157}'
+  ],
+  {
+    "groupName": "TEST",
+    "date": "13.03.22",
+    "lessons": [
+      {
+        "type": "SingleLesson",
+        "lesson": {
+          "type": "Empty"
+        }
+      },
+      {
+        "type": "SingleLesson",
+        "lesson": {
+          "type": "Lesson",
+          "name": "TestLesson1",
+          "teacherName": "TestTeacher1",
+          "lessonType": "Practic",
+          "auditorium": "100"
+        }
+      },
+      {
+        "type": "PairLesson",
+        "pair": {
+          "first": {
+            "type": "Lesson",
+            "name": "TestLesson2",
+            "teacherName": "TestTeacher2",
+            "lessonType": "Practic",
+            "auditorium": "100"
+          },
+          "second": {
+            "type": "Lesson",
+            "name": "TestLesson3",
+            "teacherName": "TestTeacher3",
+            "lessonType": "Practic",
+            "auditorium": "100"
+          }
+        }
+      },
+      {
+        "type": "SingleLesson",
+        "lesson": {
+          "type": "Empty"
+        }
+      },
+      {
+        "type": "PairLesson",
+        "pair": {
+          "first": {
+            "type": "Lesson",
+            "name": "TestLesson4",
+            "teacherName": "TestTeacher4",
+            "lessonType": "Practic",
+            "auditorium": "100"
+          },
+          "second": {
+            "type": "Empty"
+          }
+        }
+      },
+      {
+        "type": "PairLesson",
+        "pair": {
+          "first": {
+            "type": "Empty"
+          },
+          "second": {
+            "type": "Lesson",
+            "name": "TestLesson5",
+            "teacherName": "TestTeacher5",
+            "lessonType": "Practic",
+            "auditorium": "100"
+          }
+        }
+      },
+      {
+        "type": "SingleLesson",
+        "lesson": {
+          "type": "Empty"
+        }
+      },
+      {
+        "type": "SingleLesson",
+        "lesson": {
+          "type": "Empty"
+        }
+      }
+    ]
+  },
+  {
+    "groupName": "TEST",
+    "date": "2022-03-13",
+    "lessons": [
+      {
+        "type": "SingleLesson",
+        "lesson": {
+          "type": "Empty"
+        }
+      },
+      {
+        "type": "SingleLesson",
+        "lesson": {
+          "type": "Lesson",
+          "name": "TestLesson1",
+          "teacherName": "TestTeacher1",
+          "lessonType": "Practic",
+          "auditorium": "100"
+        }
+      },
+      {
+        "type": "PairLesson",
+        "pair": {
+          "first": {
+            "type": "Lesson",
+            "name": "TestLesson2",
+            "teacherName": "TestTeacher2",
+            "lessonType": "Practic",
+            "auditorium": "100"
+          },
+          "second": {
+            "type": "Lesson",
+            "name": "TestLesson3",
+            "teacherName": "TestTeacher3",
+            "lessonType": "Practic",
+            "auditorium": "100"
+          }
+        }
+      },
+      {
+        "type": "SingleLesson",
+        "lesson": {
+          "type": "Empty"
+        }
+      },
+      {
+        "type": "PairLesson",
+        "pair": {
+          "first": {
+            "type": "Lesson",
+            "name": "TestLesson4",
+            "teacherName": "TestTeacher4",
+            "lessonType": "Practic",
+            "auditorium": "100"
+          },
+          "second": {
+            "type": "Empty"
+          }
+        }
+      },
+      {
+        "type": "PairLesson",
+        "pair": {
+          "first": {
+            "type": "Empty"
+          },
+          "second": {
+            "type": "Lesson",
+            "name": "TestLesson5",
+            "teacherName": "TestTeacher5",
+            "lessonType": "Practic",
+            "auditorium": "100"
+          }
+        }
+      },
+      {
+        "type": "SingleLesson",
+        "lesson": {
+          "type": "Empty"
+        }
+      },
+      {
+        "type": "SingleLesson",
+        "lesson": {
+          "type": "Empty"
+        }
+      }
+    ]
+  }
+]

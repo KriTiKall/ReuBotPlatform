@@ -17,9 +17,9 @@ object TestConstants {
     val SCHEDULE = format.decodeFromString<Array<Schedule>>(File(PATH).readText())
 
     fun write() {
-        val parsesr = ScheduleParser(true)
-        val actuasl = parsesr.parse(File(TestConstants.HTML_PATH).readText(), "ПКо-31")
-        File(PATH).writeText(format.encodeToString(actuasl))
+        val parser = ScheduleParser(true)
+        val actual = parser.parse(File(TestConstants.HTML_PATH).readText(), "ПКо-31")
+        File(PATH).writeText(format.encodeToString(actual))
     }
 }
 

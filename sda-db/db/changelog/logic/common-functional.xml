@@ -30,4 +30,17 @@
                      path="sql/02-common-functions-rollback.sql"/>
         </rollback>
     </changeSet>
+
+    <changeSet id="common-out-function" author="geniyc" dbms="postgresql">
+        <comment>Создание основных функций, процедур для вывода расписания</comment>
+        <sqlFile endDelimiter="%%%%%%%%%%%%"
+                 relativeToChangelogFile="true"
+                 path="sql/03-common-getter.sql"/>
+
+        <rollback>
+            <sqlFile endDelimiter="%%%%%%%%%%%%"
+                     relativeToChangelogFile="true"
+                     path="sql/03-common-getter-rollback.sql"/>
+        </rollback>
+    </changeSet>
 </databaseChangeLog>

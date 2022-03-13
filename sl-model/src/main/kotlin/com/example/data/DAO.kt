@@ -1,5 +1,7 @@
 package com.example.data
 
+import model.entity.Schedule
+
 interface DAO<Entity, Key> {
     fun create(entity: Entity)
     fun read(key: Key): Entity
@@ -7,3 +9,9 @@ interface DAO<Entity, Key> {
     fun delete(entity: Entity)
     val list: List<Entity>?
 }
+
+interface ScheduleReaderDAO {
+
+    fun saveOrUpdate(schedule: Schedule): Boolean
+}
+

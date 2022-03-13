@@ -52,10 +52,11 @@ class EmptyLesson() : LessonEntity {
 }
 
 @Serializable
+@SerialName("Lesson")
 data class Lesson(
     val name: String,
     val teacherName: String,
-    @SerialName("LessonType")
+    @SerialName("lessonType")
     val type: String = "",
     var auditorium: String = ""
 ) : LessonEntity {
@@ -64,14 +65,14 @@ data class Lesson(
 }
 
 @Serializable
+@SerialName("SingleLesson")
 data class SingleLesson(
-
     val lesson: LessonEntity
 ) : Indivisible
 
 @Serializable
+@SerialName("PairLesson")
 data class PairLesson(
-
     val pair: Pair<LessonEntity, LessonEntity>
 ) : Indivisible {
 

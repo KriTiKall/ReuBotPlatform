@@ -47,7 +47,7 @@ create table if not exists model.lessons_to_schedules
     unique (schedule_id, position, is_actual)
 );
 
-set timezone = '+10';
+set timezone = '+5';
 
 create table if not exists model.pair_lesson
 (
@@ -61,6 +61,7 @@ create table if not exists model.lessons
     id            serial primary key,
     discipline_id int         not null,
     teacher_id    int         not null,
+    type          varchar(25) not null,
     auditorium    varchar(20) not null
 );
 
@@ -69,7 +70,7 @@ create table if not exists model.disciplines
     id   serial primary key,
     name text
 );
-
+-- dont use
 create table if not exists model.teacher_posts
 (
     id   serial primary key,
@@ -79,6 +80,6 @@ create table if not exists model.teacher_posts
 create table if not exists model.teachers
 (
     id      serial primary key,
-    post_id int,
+    post_id int default null,
     name    varchar(80)
 );
