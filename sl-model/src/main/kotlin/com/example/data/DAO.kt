@@ -1,6 +1,7 @@
 package com.example.data
 
-import model.entity.Schedule
+import com.example.model.entity.Schedule
+
 
 interface DAO<Entity, Key> {
     fun create(entity: Entity)

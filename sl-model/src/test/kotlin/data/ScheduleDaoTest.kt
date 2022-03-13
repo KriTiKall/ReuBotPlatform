@@ -1,13 +1,12 @@
 package data
 
+import com.example.model.entity.*
+import com.example.view.ScheduleOperationDoa
 import kotlinx.serialization.encodeToString
-import model.entity.*
 import org.junit.jupiter.api.AfterAll
-import org.junit.jupiter.api.Test
-
 import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
-import view.ScheduleOperationDoa
 import kotlin.test.assertEquals
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)

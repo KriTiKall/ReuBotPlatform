@@ -1,8 +1,8 @@
 package data.entites
 
+import com.example.model.entity.Schedule
+import com.example.model.entity.format
 import kotlinx.serialization.encodeToString
-import model.entity.Schedule
-import model.entity.format
 
 class ScheduleDbMapper { // todo see how do this better
     lateinit var date: String

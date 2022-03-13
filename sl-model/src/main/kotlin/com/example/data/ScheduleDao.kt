@@ -1,8 +1,9 @@
 package data
 
+import com.example.data.ScheduleReaderDAO
+import com.example.model.IScheduleService
+import com.example.model.entity.Schedule
 import data.entites.ScheduleDbMapper
-import model.IScheduleService
-import model.entity.Schedule
 import java.sql.Connection
 import java.sql.DriverManager
 
@@ -34,7 +35,7 @@ class ScheduleDao : ScheduleReaderDAO {
         val set = stm.executeQuery()
         set.next()
         val action = set.getString(2)
-        print("${set.getString(1)} $action")
+        println("${set.getString(1)} $action")
         return action == "insert"
     }
 }

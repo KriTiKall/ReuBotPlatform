@@ -1,13 +1,6 @@
-import data.ScheduleReaderService
+import com.example.model.entity.*
 import data.entites.HashWrapper
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
-import model.MockScheduleService
-import model.ScheduleReader
-import model.entity.*
-import model.parser.ScheduleParser
-import view.ScheduleOperationDoa
-import java.time.LocalDate
 
 fun main(args: Array<String>) {
 //

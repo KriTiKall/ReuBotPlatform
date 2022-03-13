@@ -1,12 +1,10 @@
 package data
 
+import com.example.model.MockScheduleService
+import com.example.model.ScheduleReader
+import com.example.model.parser.ScheduleParser
 import data.entites.ScheduleDbMapper
-import model.MockScheduleService
-import model.ScheduleReader
-import model.parser.ScheduleParser
 import java.sql.DriverManager
-import java.sql.SQLType
-import java.sql.Types
 import java.time.LocalDate
 
 fun main() {
@@ -50,7 +48,5 @@ fun main() {
 //        set.next()
 //
 //        print("${set.getInt(1)}")
-
-
     }
 }

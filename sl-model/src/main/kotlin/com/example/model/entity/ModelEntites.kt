@@ -21,7 +21,7 @@ val jsonStrict = SerializersModule {
 
 val format = Json {
     serializersModule = jsonStrict
-//    prettyPrint = true
+    prettyPrint = true
     ignoreUnknownKeys = true
     encodeDefaults = true
 }
@@ -85,10 +85,6 @@ data class Schedule(
     var date: String,
     var lessons: Array<Indivisible>
 ) {
-    init {
-        if (lessons.size != 8)
-            throw RuntimeException("The array of lesson have not 8 elements(size=${lessons.size})")
-    }
 
     constructor() : this("", "", Array(8) {SingleLesson(EmptyLesson())})
 
