@@ -15,13 +15,13 @@ class ScheduleDbMapper { // todo see how do this better
             date = it.date
             name = it.groupName
             hash = it.hashCode()
-            lessonJsonb = it.lessons.map { l -> format.encodeToString(HashWrapper(l, l.hashCode())) }.toTypedArray()
+            lessonJsonb = it.lessons.map { l -> "'${format.encodeToString(HashWrapper(l, l.hashCode()))}'" }.toTypedArray()
         }
         return this
     }
 
 
     override fun toString(): String {
-        return "('$date', '$name', $hash, (ARRAY[${lessonJsonb.joinToString()}])::model.lessons_json)::model.schedule))"
+        return "('$name', '$date', $hash, (ARRAY[${lessonJsonb.joinToString()}])::model.lessons_json)::model.schedule"
     }
 }

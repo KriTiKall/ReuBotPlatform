@@ -61,8 +61,8 @@ fun Routing.scheduleOperations(service: IScheduleOperations) {
         if (name != null && date != null) {
 //            call.respondText("Wrong parameter. Needs write /schedule?name=<group>>&date=<date>", status = HttpStatusCode.BadRequest)
         } else {
-            val json = format.encodeToString<Schedule>(service.getSchedule(name!!, date!!))
-            call.respondText(json, status = HttpStatusCode.OK)
+//            val json = format.encodeToString<Schedule>(service.getSchedule(name!!, date!!))
+//            call.respondText(json, status = HttpStatusCode.OK)
         }
     }
 }

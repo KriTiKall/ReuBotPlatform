@@ -56,7 +56,7 @@ class EmptyLesson() : LessonEntity {
 data class Lesson(
     val name: String,
     val teacherName: String,
-    @SerialName("LessonType")
+    @SerialName("lessonType")
     val type: String = "",
     var auditorium: String = ""
 ) : LessonEntity {

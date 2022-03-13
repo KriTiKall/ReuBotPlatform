@@ -9,5 +9,13 @@ interface IScheduleOperations {
     fun getCurrentSchedule(groupName: String): Schedule
     fun getSchedules(groupName: String): Array<Schedule>
     fun getNextLesson(groupName: String): Lesson
-    fun getSchedule(groupName: String, date: LocalDate): Schedule
+    fun getSchedule(groupName: String, date: String): Schedule
+}
+
+interface IScheduleOperationsDao {
+
+    fun getCurrentSchedule(groupName: String): Schedule?
+    fun getSchedules(groupName: String): Array<Schedule?>
+    fun getNextLesson(groupName: String): Lesson?
+    fun getSchedule(groupName: String, date: String): Schedule?
 }
