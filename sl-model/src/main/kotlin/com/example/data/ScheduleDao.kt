@@ -35,7 +35,7 @@ class ScheduleDao : ScheduleReaderDAO {
         val set = stm.executeQuery()
         set.next()
         val action = set.getString(2)
-        println("${set.getString(1)} $action")
+        println("${set.getString(1)}")
         return action == "insert"
     }
 }

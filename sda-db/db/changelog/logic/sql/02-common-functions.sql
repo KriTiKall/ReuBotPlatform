@@ -21,22 +21,25 @@ begin
       and name = pi_schedule.name;
 
     if FOUND then
+        RAISE NOTICE 'hash select = % and pi = %', schedule_hash, pi_schedule.hash;
         if schedule_hash != pi_schedule.hash then
             action := 'update';
-            select model.update_schedule(pi_schedule) into result_test;
+            select upd.po_result_msg into result_test from model.update_schedule(pi_schedule) upd;
         else
             action := 'didnt changed';
         end if;
     else
         action := 'insert';
-        select model.insert_schedule(pi_schedule) into result_test;
+        select ins.po_result_msg
+        into result_test
+        from model.insert_schedule(pi_schedule) ins;
     end if;
 
     po_action := action;
 
-    po_result_msg =action || ', ' || result_test || ', ok, '
-                       || pi_schedule.date || ', ' ||
-                   pi_schedule.name;
+    po_result_msg = action || ', ' || result_test || ', ok, '
+                        || pi_schedule.date || ', ' ||
+                    pi_schedule.name;
 exception
     when others
         then
@@ -44,7 +47,7 @@ exception
                 exception_diag text;
             begin
                 get stacked diagnostics exception_diag = pg_exception_context;
-                po_result_msg := result_test || ', status: ' || SQLSTATE || ', ' || SQLERRM || ' CTX:' ||
+                po_result_msg := 'ERROR:' || result_test || ', status: ' || SQLSTATE || ', ' || SQLERRM || ' CTX:' ||
                                  exception_diag;
                 return;
             end;
@@ -52,7 +55,7 @@ end;
 $$;
 
 create or replace function model.update_schedule(pi_schedule model.schedule,
-                                      out po_result_msg text)
+                                                 out po_result_msg text)
     language plpgsql
 as
 $$
@@ -64,12 +67,13 @@ declare
     p_lesson_ref   int;
     p_r_les_to_sch model.lessons_to_schedules%rowtype;
     p_schedule_id  int;
+    p_id_name      int;
 begin
 
     p_less = pi_schedule.lessons;
 
-    select sch.id
-    into p_schedule_id
+    select sch.id, gn.id
+    into p_schedule_id, p_id_name
     from model.schedules sch
              join model.group_names gn on gn.id = sch.name_id
     where gn.name = pi_schedule.name
@@ -77,9 +81,18 @@ begin
 
     RAISE NOTICE 'update';
 
+    update model.schedules sch
+    set hash = pi_schedule.hash
+    where sch.name_id = p_id_name
+      and sch.date = pi_schedule.date;
+
     for i in 1..8
         loop
             p_hash := (p_less[i] #>> '{hash}')::int; -- save hash
+
+            select po_lesson_ref, po_is_empty, po_is_single
+            into p_lesson_ref, p_is_empty, p_is_single
+            from model.get_lesson_ref(p_less[i]); -- array in postgrs start from 1
 
             select *
             into p_r_les_to_sch
@@ -90,22 +103,41 @@ begin
 
             RAISE NOTICE 'Вызов функции(%) hash = %, lesson = %, | %', i, p_hash, p_r_les_to_sch.hash, p_hash != coalesce(p_r_les_to_sch.hash, 1987375157);
 -- 1987375157 = empty lesson
-            if p_hash != coalesce(p_r_les_to_sch.hash, 1987375157) then
+
+            if FOUND or not p_is_empty then
+                if FOUND and not p_is_empty then
+                    if p_hash != p_r_les_to_sch.hash then
+                        call model.delete_lesson(p_schedule_id, i);
+
+                        RAISE NOTICE 'hash and';
+
+                        update model.lessons_to_schedules
+                        set is_actual = 'false'
+                        where schedule_id = p_schedule_id
+                          and position = i
+                          and is_actual = 'true';
+
+                        RAISE NOTICE 'hash ref = %, empty = %, single = % , json = %', p_lesson_ref, p_is_empty, p_is_single, p_less[i];
+
+                        insert into model.lessons_to_schedules(schedule_id, position, lesson_ref_id, hash, is_single)
+                        values (p_schedule_id, i, p_lesson_ref, p_hash, p_is_single);
+
+                        --                     if p_is_empty = 'false' then
+--                         insert into model.lessons_to_schedules(schedule_id, position, lesson_ref_id, hash, is_single)
+--                         values (p_schedule_id, i, p_lesson_ref, p_hash, p_is_single);
+--                     end if;
+                    end if;
+                end if;
+            else
                 call model.delete_lesson(p_schedule_id, i);
 
-                RAISE NOTICE 'hash';
+                RAISE NOTICE 'hash or ';
 
                 update model.lessons_to_schedules
                 set is_actual = 'false'
                 where schedule_id = p_schedule_id
                   and position = i
                   and is_actual = 'true';
-
-                select po_lesson_ref, po_is_empty, po_is_single
-                into p_lesson_ref, p_is_empty, p_is_single
-                from model.get_lesson_ref(p_less[i]); -- array in postgrs start from 1
-
-                RAISE NOTICE 'hash ref = %, empty = %, single = % , json = %', p_lesson_ref, p_is_empty, p_is_single, p_less[i];
 
                 if p_is_empty = 'false' then
                     insert into model.lessons_to_schedules(schedule_id, position, lesson_ref_id, hash, is_single)
@@ -240,6 +272,7 @@ exception
 end;
 $$;
 
+-- create new lesson returning lessons_id or pair_lesson_id
 create function model.get_lesson_ref(pi_lesson jsonb, out po_lesson_ref int,
                                      out po_is_empty bool, out po_is_single bool)
     language plpgsql
@@ -251,19 +284,19 @@ declare
 begin
     po_is_empty := 'true';
 
-    if pi_lesson #>> '{lesson,type}' = 'PairLesson' then
+    if pi_lesson #>> '{type}' = 'PairLesson' then
         --              is single flag (false)
         po_is_single := 'false';
 
-        if pi_lesson #>> '{lesson,pair,first,type}' != 'Empty' then
-            select model.insert_lesson(pi_lesson, 'lesson,pair,first') into p_first_id;
+        if pi_lesson #>> '{pair,first,type}' != 'Empty' then
+            select model.insert_lesson(pi_lesson, 'pair,first') into p_first_id;
             po_is_empty := 'false';
         else
             p_first_id := null;
         end if;
 
-        if pi_lesson #>> '{lesson,pair,second,type}' != 'Empty' then
-            select model.insert_lesson(pi_lesson, 'lesson,pair,second') into p_second_id;
+        if pi_lesson #>> '{pair,second,type}' != 'Empty' then
+            select model.insert_lesson(pi_lesson, 'pair,second') into p_second_id;
             po_is_empty := 'false';
         else
             p_second_id := null;
@@ -277,8 +310,8 @@ begin
 --               is single flag (true)
         po_is_single = 'true';
 
-        if pi_lesson #>> '{lesson,lesson,type}' != 'Empty' then
-            select model.insert_lesson(pi_lesson, 'lesson,lesson') into po_lesson_ref;
+        if pi_lesson #>> '{lesson,type}' != 'Empty' then
+            select model.insert_lesson(pi_lesson, 'lesson') into po_lesson_ref;
             po_is_empty := 'false';
         end if;
     end if;
@@ -325,7 +358,8 @@ begin
     end if;
 
     insert into model.lessons(discipline_id, teacher_id, type, auditorium)
-    values (p_discipline_id, p_teacher_id, pi_lesson #>> ('{' || pi_path || ',lessonType}')::text[], pi_lesson #>> ('{' || pi_path || ',auditorium}')::text[]);
+    values (p_discipline_id, p_teacher_id, pi_lesson #>> ('{' || pi_path || ',lessonType}')::text[],
+            pi_lesson #>> ('{' || pi_path || ',auditorium}')::text[]);
 
     select currval(pg_get_serial_sequence('model.lessons', 'id')) into po_id;
 end;

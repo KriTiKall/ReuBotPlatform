@@ -17,10 +17,14 @@ internal class ScheduleDaoTest {
     private val list = mutableListOf<Schedule>()
 
     @BeforeAll
+    fun before() {
+        initSchedules1()
+    }
+
     fun initSchedules() {
         list.add(
             Schedule(
-                "TEST", "13.03.22", arrayOf(
+                "TEST1", "13.03.22", arrayOf(
                     SingleLesson(EmptyLesson()),
                     SingleLesson(
                         Lesson(
@@ -76,7 +80,7 @@ internal class ScheduleDaoTest {
         )
         list.add(
             Schedule(
-                "TEST", "13.03.22", arrayOf(
+                "TEST1", "13.03.22", arrayOf(
                     SingleLesson(EmptyLesson()),
                     SingleLesson(
                         Lesson(
@@ -139,7 +143,7 @@ internal class ScheduleDaoTest {
         )
         list.add(
             Schedule(
-                "TEST", "13.03.22", arrayOf(
+                "TEST1", "13.03.22", arrayOf(
                     SingleLesson(EmptyLesson()),
                     SingleLesson(EmptyLesson()),
                     SingleLesson(EmptyLesson()),
@@ -151,7 +155,192 @@ internal class ScheduleDaoTest {
                 )
             )
         )
+        list.add(
+            Schedule(
+                "TEST1", "13.03.22", arrayOf(
+                    SingleLesson(EmptyLesson()),
+                    SingleLesson(
+                        Lesson(
+                            "TestLesson9",
+                            "TestTeacher9",
+                            "Practic",
+                            "100"
+                        )
+                    ),
+                    PairLesson(
+                        Pair(
+                            Lesson(
+                                "TestLesson10",
+                                "TestTeacher10",
+                                "Practic",
+                                "100"
+                            ),
+                            Lesson(
+                                "TestLesson11",
+                                "TestTeacher11",
+                                "Practic",
+                                "100"
+                            )
+                        )
+                    ),
+                    SingleLesson(
+                        Lesson(
+                            "TestLesson12",
+                            "TestTeacher12",
+                            "Practic",
+                            "100"
+                        )
+                    ),
+                    PairLesson(
+                        Pair(
+                            EmptyLesson(),
+                            Lesson(
+                                "TestLesson13",
+                                "TestTeacher13",
+                                "Practic",
+                                "100"
+                            )
+                        )
+                    ),
+                    PairLesson(
+                        Pair(
+                            Lesson(
+                                "TestLesson14",
+                                "TestTeacher14",
+                                "Practic",
+                                "100"
+                            ),
+                            EmptyLesson()
+                        )
+                    ),
+                    SingleLesson(EmptyLesson()),
+                    SingleLesson(EmptyLesson())
+                )
+            )
+        )
+        list.add(
+            Schedule(
+                "TEST1", "13.03.22", arrayOf(
+                    SingleLesson(EmptyLesson()),
+                    SingleLesson(
+                        Lesson(
+                            "TestLesson1",
+                            "TestTeacher1",
+                            "Practic",
+                            "100"
+                        )
+                    ),
+                    PairLesson(
+                        Pair(
+                            Lesson(
+                                "TestLesson2",
+                                "TestTeacher2",
+                                "Practic",
+                                "100"
+                            ),
+                            Lesson(
+                                "TestLesson3",
+                                "TestTeacher3",
+                                "Practic",
+                                "100"
+                            )
+                        )
+                    ),
+                    SingleLesson(EmptyLesson()),
+                    PairLesson(
+                        Pair(
+                            Lesson(
+                                "TestLesson4",
+                                "TestTeacher4",
+                                "Practic",
+                                "100"
+                            ),
+                            EmptyLesson()
+                        )
+                    ),
+                    PairLesson(
+                        Pair(
+                            EmptyLesson(),
+                            Lesson(
+                                "TestLesson5",
+                                "TestTeacher5",
+                                "Practic",
+                                "100"
+                            )
+                        )
+                    ),
+                    SingleLesson(EmptyLesson()),
+                    SingleLesson(EmptyLesson())
+                )
+            )
+        )
+    }
 
+    fun initSchedules1() {
+        list.add(
+            Schedule(
+                "TEST1", "13.03.22", arrayOf(
+                    SingleLesson(EmptyLesson()),
+                    SingleLesson(EmptyLesson()),
+                    SingleLesson(EmptyLesson()),
+                    SingleLesson(EmptyLesson()),
+                    SingleLesson(EmptyLesson()),
+                    SingleLesson(EmptyLesson()),
+                    SingleLesson(EmptyLesson()),
+                    SingleLesson(EmptyLesson()),
+                )
+            )
+        )
+        list.add(
+            Schedule(
+                "TEST1", "13.03.22", arrayOf(
+                    SingleLesson(
+                        Lesson(
+                            "TestLesson1",
+                            "TestTeacher1",
+                            "Practic",
+                            "100"
+                        )
+                    ),
+                    SingleLesson(EmptyLesson()),
+                    SingleLesson(EmptyLesson()),
+                    SingleLesson(EmptyLesson()),
+                    SingleLesson(EmptyLesson()),
+                    SingleLesson(EmptyLesson()),
+                    SingleLesson(EmptyLesson()),
+                    SingleLesson(EmptyLesson()),
+                )
+            )
+        )
+        list.add(
+            Schedule(
+                "TEST1", "13.03.22", arrayOf(
+                    SingleLesson(EmptyLesson()),
+                    PairLesson(
+                        Pair(
+                            Lesson(
+                                "TestLesson2",
+                                "TestTeacher2",
+                                "Practic",
+                                "100"
+                            ),
+                            Lesson(
+                                "TestLesson3",
+                                "TestTeacher3",
+                                "Practic",
+                                "100"
+                            )
+                        )
+                    ),
+                    SingleLesson(EmptyLesson()),
+                    SingleLesson(EmptyLesson()),
+                    SingleLesson(EmptyLesson()),
+                    SingleLesson(EmptyLesson()),
+                    SingleLesson(EmptyLesson()),
+                    SingleLesson(EmptyLesson()),
+                )
+            )
+        )
     }
 
     @AfterAll
@@ -163,24 +352,30 @@ internal class ScheduleDaoTest {
     @Test
     fun saveOrUpdateTest1() {
         dao.saveOrUpdate(list.get(0))
-        val getSch = get.getCurrentSchedule("TEST")
-//        println("${encode(list.get(0))} \n ${encode(getSch)}")
+        val getSch = get.getSchedule("TEST1", "2022-03-13")
+        println("${encode(list.get(0))} \n ${encode(getSch)}")
         assertEquals(list.get(0), getSch)
     }
 
     @Test
     fun saveOrUpdateTest2() {
         dao.saveOrUpdate(list.get(1))
-        val getSch = get.getCurrentSchedule("TEST")
-//        println("${encode(list.get(0))} \n ${encode(getSch)}")
+        val getSch = get.getSchedule("TEST1", "2022-03-13")
+        println("${encode(list.get(0))} \n ${encode(getSch)}")
         assertEquals(list.get(1), getSch)
     }
 
     @Test
     fun saveOrUpdateTest3() {
         dao.saveOrUpdate(list.get(2))
-        val getSch = get.getCurrentSchedule("TEST")
+        val getSch = get.getSchedule("TEST1", "2022-03-13")
         println("${encode(list.get(0))} \n ${encode(getSch)}")
+        assertEquals(list.get(2), getSch)
+    }
+
+    @Test
+    fun returnTest() {
+        val getSch = get.getSchedule("TEST1", "2022-03-13")
         assertEquals(list.get(2), getSch)
     }
 

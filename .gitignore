@@ -1,6 +1,9 @@
 .idea/
 .target/
 .out/
+out/
+
+tomcat.8080/
 
 HELP.md
 target/

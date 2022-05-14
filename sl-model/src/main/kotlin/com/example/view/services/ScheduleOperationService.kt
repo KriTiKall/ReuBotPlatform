@@ -50,7 +50,7 @@ class ScheduleOperationDoa : IScheduleOperationsDao {
 
     private val connection: Connection
 
-    init {
+    init { //TODO move to another class
         val url = "jdbc:postgresql://localhost:5432/rea-bot-api-db?user=bot-api-admin&password=admin"
         connection = DriverManager.getConnection(url)
     }
