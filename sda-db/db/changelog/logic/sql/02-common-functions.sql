@@ -272,6 +272,7 @@ exception
 end;
 $$;
 
+
 -- create new lesson returning lessons_id or pair_lesson_id
 create function model.get_lesson_ref(pi_lesson jsonb, out po_lesson_ref int,
                                      out po_is_empty bool, out po_is_single bool)
@@ -310,8 +311,8 @@ begin
 --               is single flag (true)
         po_is_single = 'true';
 
-        if pi_lesson #>> '{lesson,type}' != 'Empty' then
-            select model.insert_lesson(pi_lesson, 'lesson') into po_lesson_ref;
+        if pi_lesson #>> '{lesson,lesson,type}' != 'Empty' then
+            select model.insert_lesson(pi_lesson, 'lesson,lesson') into po_lesson_ref;
             po_is_empty := 'false';
         end if;
     end if;
