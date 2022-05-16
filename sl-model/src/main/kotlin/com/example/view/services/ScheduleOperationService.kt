@@ -15,11 +15,11 @@ class ScheduleOperation : IScheduleOperations {
     }
 
     override fun getSchedules(groupName: String): Array<Schedule> {
-        TODO("Not yet implemented")
+        return dao.getSchedules(groupName)
     }
 
     override fun getNextLesson(groupName: String): Indivisible {
-        TODO("Not yet implemented")
+        return dao.getNextLesson(groupName)
     }
 
     override fun getSchedule(groupName: String, date: String): Schedule {
@@ -63,12 +63,22 @@ class ScheduleOperationDoa : IScheduleOperationsDao {
         return getSchedule(groupName, LocalDate.now().toString())
     }
 
-    override fun getSchedules(groupName: String): Array<Schedule?> {
-        TODO("Not yet implemented")
+    override fun getSchedules(groupName: String): Array<Schedule> {
+        val stm = connection.prepareStatement("select * from model.get_schedules('$groupName'::varchar, 'true');" )
+        val set = stm.executeQuery()
+        set.next()
+        val json = set.getString(1)
+        println("${set.getString(2)}")
+        return format.decodeFromString(json)
     }
 
-    override fun getNextLesson(groupName: String): Lesson? {
-        TODO("Not yet implemented")
+    override fun getNextLesson(groupName: String): Indivisible {
+        val stm = connection.prepareStatement("select * from model.get_next_lesson('$groupName');" )
+        val set = stm.executeQuery()
+        set.next()
+        val json = set.getString(1)
+        println("${set.getBoolean(2)} : ${set.getString(3)}")
+        return format.decodeFromString(json)
     }
 
     override fun getSchedule(groupName: String, date: String): Schedule {

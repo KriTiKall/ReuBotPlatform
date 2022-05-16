@@ -21,7 +21,7 @@ begin
       and name = pi_schedule.name;
 
     if FOUND then
-        RAISE NOTICE 'hash select = % and pi = %', schedule_hash, pi_schedule.hash;
+        RAISE NOTICE 'hash select = % and pi = %, bool = %', schedule_hash, pi_schedule.hash, schedule_hash != pi_schedule.hash;
         if schedule_hash != pi_schedule.hash then
             action := 'update';
             select upd.po_result_msg into result_test from model.update_schedule(pi_schedule) upd;
@@ -271,7 +271,6 @@ exception
             end;
 end;
 $$;
-
 
 -- create new lesson returning lessons_id or pair_lesson_id
 create function model.get_lesson_ref(pi_lesson jsonb, out po_lesson_ref int,
