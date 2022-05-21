@@ -76,7 +76,7 @@ class ScheduleReader(
     }
 
     private fun readPage(url: String): String {
-        var out = ""
+        var out: String
         val connection = URL(url).openConnection()
 
         BufferedReader(InputStreamReader(connection.getInputStream())).use {

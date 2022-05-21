@@ -1,11 +1,11 @@
-package data
+package data.dao
 
-import com.example.data.ScheduleReaderDAO
+import com.example.data.ConnectionGetter
+import com.example.data.dao.ScheduleReaderDAO
 import com.example.model.IScheduleService
 import com.example.model.entity.Schedule
 import data.entites.ScheduleDbMapper
 import java.sql.Connection
-import java.sql.DriverManager
 
 class ScheduleReaderService : IScheduleService {
 
@@ -21,8 +21,7 @@ class ScheduleDao : ScheduleReaderDAO {
     private val connection: Connection
 
     init {
-        val url = "jdbc:postgresql://localhost:5432/rea-bot-api-db?user=bot-api-admin&password=admin"
-        connection = DriverManager.getConnection(url)
+        connection = ConnectionGetter.getConnection()
     }
 
     fun destroy() {

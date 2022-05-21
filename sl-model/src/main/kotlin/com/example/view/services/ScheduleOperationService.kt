@@ -1,5 +1,6 @@
 package com.example.view
 
+import com.example.data.ConnectionGetter
 import com.example.model.entity.*
 import kotlinx.serialization.decodeFromString
 import java.sql.Connection
@@ -50,9 +51,8 @@ class ScheduleOperationDoa : IScheduleOperationsDao {
 
     private val connection: Connection
 
-    init { //TODO move to another class
-        val url = "jdbc:postgresql://localhost:5432/rea-bot-api-db?user=bot-api-admin&password=admin"
-        connection = DriverManager.getConnection(url)
+    init {
+        connection = ConnectionGetter.getConnection()
     }
 
     fun destroy() {
