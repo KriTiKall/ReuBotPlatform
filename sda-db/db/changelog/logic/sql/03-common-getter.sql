@@ -56,7 +56,7 @@ declare
     p_is_single   bool = NULL;
     p_schedule_id int  = NULL;
 begin
-    po_is_exists := false;
+    po_is_exists := true;
     po_json := '{
       "groupName": "",
       "date": "",
@@ -96,6 +96,10 @@ begin
                   and gn.name = pi_group_name
                   and sch.date = pi_date
                   and lts.is_actual = pi_is_actual;
+
+                if FOUND then
+                    po_is_exists := false;
+                end if;
 
                 RAISE NOTICE 'in loop ref = %, single = %', p_lesson_ref, p_is_single;
 
@@ -171,14 +175,14 @@ end;
 $$;
 
 create or replace function model.get_next_lesson(pi_group_name varchar(10),
-                                                 out po_json jsonb, out po_is_exist_today bool, out po_result_msg text)
+                                                 out po_json jsonb, out po_is_exist bool, out po_result_msg text)
     language plpgsql
 as
 $$
 declare
-    p_lesson_ref  int  = NULL;
-    p_is_single   bool = NULL;
-    p_position    int  = NULL;
+    p_lesson_ref  int  := NULL;
+    p_is_single   bool := NULL;
+    p_position    int  := NULL;
 begin
     select position
     into p_position
@@ -186,8 +190,7 @@ begin
     where status = 'next'
       and current_time between start_time and end_time;
 
-    po_is_exist_today := false;
-
+    po_is_exist := false;
 
     select lts.lesson_ref_id, lts.is_single
     into p_lesson_ref, p_is_single
@@ -203,7 +206,7 @@ begin
     if FOUND then
         select model.get_lesson(p_lesson_ref, p_is_single)
         into po_json;
-        po_is_exist_today := 'true'::bool;
+        po_is_exist := 'true'::bool;
     else
         po_json := '{
           "type": "SingleLesson",
@@ -211,7 +214,7 @@ begin
             "type": "Empty"
           }
         }'::jsonb;
-        po_is_exist_today := 'false'::bool;
+        po_is_exist := 'false'::bool;
     end if;
 
     po_result_msg := 'get_next_lesson: ok';

@@ -66,6 +66,7 @@ declare
     p_hash         int;
     p_lesson_ref   int;
     p_r_les_to_sch model.lessons_to_schedules%rowtype;
+    p_found        bool := false;
     p_schedule_id  int;
     p_id_name      int;
 begin
@@ -101,15 +102,24 @@ begin
               and position = i
               and is_actual = 'true';
 
-            RAISE NOTICE 'Вызов функции(%) hash = %, lesson = %, | %', i, p_hash, p_r_les_to_sch.hash, p_hash != coalesce(p_r_les_to_sch.hash, 1987375157);
+            --             if p_r_les_to_sch is not null then
+--                 p_found := true;
+--             end if;
+            p_found := FOUND;
+
+            RAISE NOTICE 'is_empty = % and found = %', p_is_empty, FOUND;
+
+            RAISE NOTICE 'Вызов функции(%) hash = %, lesson = %, | %', i, p_hash, p_r_les_to_sch.hash, p_hash != coalesce(p_r_les_to_sch.hash, 1054932644);
 -- 1987375157 = empty lesson
 
-            if FOUND or not p_is_empty then
-                if FOUND and not p_is_empty then
-                    if p_hash != p_r_les_to_sch.hash then
-                        call model.delete_lesson(p_schedule_id, i);
+            if p_found or not p_is_empty then
+                if p_found and not p_is_empty then
+                    RAISE NOTICE 'db = !empty and json = !empty';
+                    RAISE NOTICE 'hash f % / s % == % ', p_hash, p_r_les_to_sch.hash, p_hash != p_r_les_to_sch.hash;
 
-                        RAISE NOTICE 'hash and';
+                    if p_hash != p_r_les_to_sch.hash then
+                        RAISE NOTICE 'db != json';
+                        call model.delete_lesson(p_schedule_id, i);
 
                         update model.lessons_to_schedules
                         set is_actual = 'false'
@@ -128,21 +138,28 @@ begin
 --                     end if;
                     end if;
                 end if;
-            else
-                call model.delete_lesson(p_schedule_id, i);
 
-                RAISE NOTICE 'hash or ';
+                if p_found and p_is_empty then
+                    RAISE NOTICE 'db = !empty and json = empty';
+                    call model.delete_lesson(p_schedule_id, i);
 
-                update model.lessons_to_schedules
-                set is_actual = 'false'
-                where schedule_id = p_schedule_id
-                  and position = i
-                  and is_actual = 'true';
+                    update model.lessons_to_schedules
+                    set is_actual = 'false'
+                    where schedule_id = p_schedule_id
+                      and position = i
+                      and is_actual = 'true';
+                end if;
 
-                if p_is_empty = 'false' then
+                if not p_found and not p_is_empty then
+                    RAISE NOTICE 'db = empty and json = !empty';
+
                     insert into model.lessons_to_schedules(schedule_id, position, lesson_ref_id, hash, is_single)
                     values (p_schedule_id, i, p_lesson_ref, p_hash, p_is_single);
                 end if;
+            else
+                RAISE NOTICE 'db = empty and json = empty';
+
+                call model.delete_lesson(p_schedule_id, i);
             end if;
         end loop;
 
@@ -273,8 +290,8 @@ end;
 $$;
 
 -- create new lesson returning lessons_id or pair_lesson_id
-create function model.get_lesson_ref(pi_lesson jsonb, out po_lesson_ref int,
-                                     out po_is_empty bool, out po_is_single bool)
+create or replace function model.get_lesson_ref(pi_lesson jsonb, out po_lesson_ref int,
+                                                out po_is_empty bool, out po_is_single bool)
     language plpgsql
 as
 $$
@@ -284,19 +301,19 @@ declare
 begin
     po_is_empty := 'true';
 
-    if pi_lesson #>> '{type}' = 'PairLesson' then
+    if pi_lesson #>> '{lesson,type}' = 'PairLesson' then
         --              is single flag (false)
         po_is_single := 'false';
 
-        if pi_lesson #>> '{pair,first,type}' != 'Empty' then
-            select model.insert_lesson(pi_lesson, 'pair,first') into p_first_id;
+        if pi_lesson #>> '{lesson,pair,first,type}' != 'Empty' then
+            select model.insert_lesson(pi_lesson, 'lesson,pair,first') into p_first_id;
             po_is_empty := 'false';
         else
             p_first_id := null;
         end if;
 
-        if pi_lesson #>> '{pair,second,type}' != 'Empty' then
-            select model.insert_lesson(pi_lesson, 'pair,second') into p_second_id;
+        if pi_lesson #>> '{lesson,pair,second,type}' != 'Empty' then
+            select model.insert_lesson(pi_lesson, 'lesson,pair,second') into p_second_id;
             po_is_empty := 'false';
         else
             p_second_id := null;
