@@ -14,8 +14,7 @@ interface IScheduleOperations {
 
 interface IScheduleOperationsDao {
 
-    fun getCurrentSchedule(groupName: String): Schedule
     fun getSchedules(groupName: String): Array<Schedule>
     fun getNextLesson(groupName: String): Indivisible
-    fun getSchedule(groupName: String, date: String): Schedule
+    fun getSchedule(groupName: String, date: String, isActual: Boolean): Schedule
 }
