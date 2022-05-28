@@ -11,8 +11,4 @@ interface DAO<Entity, Key> {
     val list: List<Entity>?
 }
 
-interface ScheduleReaderDAO {
-
-    fun saveOrUpdate(schedule: Schedule): Boolean
-}
 

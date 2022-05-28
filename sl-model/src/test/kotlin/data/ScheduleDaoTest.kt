@@ -1,5 +1,6 @@
 package data
 
+import com.example.data.PropertyReader
 import com.example.model.entity.*
 import com.example.view.ScheduleOperationDoa
 import data.entites.ScheduleDbMapper
@@ -20,6 +21,7 @@ internal class ScheduleDaoTest {
 
     @BeforeAll
     fun before() {
+        PropertyReader.load()
         initSchedules1()
     }
 
@@ -356,7 +358,7 @@ internal class ScheduleDaoTest {
         dao.saveOrUpdate(list.get(0))
         val getSch = get.getSchedule("TEST1", "2022-03-13", true)
         println("${encode(list.get(0))} \n ${encode(getSch)}")
-        assertEquals(list.get(0), getSch)
+        assertEquals(Schedule(), getSch)
     }
 
     @Test

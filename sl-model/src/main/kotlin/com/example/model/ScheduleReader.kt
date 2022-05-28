@@ -1,5 +1,6 @@
 package com.example.model
 
+import com.example.data.AccumulatedData
 import com.example.model.entity.Schedule
 import com.example.model.parser.Parser
 import java.io.BufferedReader
@@ -13,14 +14,19 @@ import java.util.*
 import java.util.stream.Collectors
 
 interface IScheduleService {
-
-    fun saveOrUpdate(schedule: Schedule): Boolean
+    fun saveOrUpdate(schedule: Schedule): String
 }
 
+interface IBrokerService {
+
+    fun accumulateData(name: String, date: String, status: String)
+    fun send()
+}
 
 class ScheduleReader(
     private val parser: Parser,
-    private val service: IScheduleService
+    private val scheduleService: IScheduleService,
+    private val brokerService: IBrokerService
 ) : Runnable {
 
     private val formatterInURL = DateTimeFormatter.ofPattern("yyyy.MM.dd")
@@ -38,7 +44,13 @@ class ScheduleReader(
             date += 2
             for (i in 2..8) {
                 array = parseSchedule(date)
-                array.forEach(service::saveOrUpdate)
+                array.forEach {
+                    brokerService.accumulateData(
+                        it.groupName,
+                        it.date,
+                        scheduleService.saveOrUpdate(it)
+                    )
+                }
                 date++
             }
             readed = true
@@ -48,11 +60,24 @@ class ScheduleReader(
         if (currentTime.minute % 2 == 0) {
             var date = LocalDate.now()
             array = parseSchedule(date)
-            array.forEach(service::saveOrUpdate)
+            array.forEach {
+                brokerService.accumulateData(
+                    it.groupName,
+                    it.date,
+                    scheduleService.saveOrUpdate(it)
+                )
+            }
 
             date++
             array = parseSchedule(date)
-            array.forEach(service::saveOrUpdate)
+            array.forEach {
+                brokerService.accumulateData(
+                    it.groupName,
+                    it.date,
+                    scheduleService.saveOrUpdate(it)
+                )
+            }
+            brokerService.send()
         }
 
         if (currentTime.hour == 6 && readed) {
@@ -102,8 +127,8 @@ private operator fun LocalDate.plus(i: Int): LocalDate {
 }
 
 class MockScheduleService : IScheduleService {
-    override fun saveOrUpdate(schedule: Schedule): Boolean {
+    override fun saveOrUpdate(schedule: Schedule): String {
         println(schedule)
-        return true
+        return ""
     }
 }

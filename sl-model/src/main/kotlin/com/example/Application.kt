@@ -1,5 +1,6 @@
 package com.example
 
+import com.example.data.BrokerService
 import com.example.data.PropertyReader
 import com.example.model.ScheduleReader
 import com.example.model.entity.format
@@ -20,7 +21,7 @@ fun main(args: Array<String>): Unit {
     PropertyReader.load()
     val exec = Executors.newSingleThreadScheduledExecutor()
     exec.scheduleAtFixedRate(
-        ScheduleReader(ScheduleParser(), ScheduleReaderService())
+        ScheduleReader(ScheduleParser(), ScheduleReaderService(), BrokerService())
         , 0, 1, TimeUnit.MINUTES)
     EngineMain.main(args)
 }
