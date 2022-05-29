@@ -30,7 +30,7 @@ sudo apt-get install \
 if [ ! -f /etc/apt/keyrings/docker.gpg ]; then
     echo "File not found!"
     sudo mkdir -p /etc/apt/keyrings
-	curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+	  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 fi
    
 

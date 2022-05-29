@@ -49,20 +49,21 @@ sudo yum install -y postgresql-client
 printf "${LC}Maven installation${NC}\n"
 
 # Download
-wget http://mirrors.estointernet.in/apache/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz -P /tmp
+if [ ! -f /tmp/apache-maven-3.6.3-bin.tar.gz ]; then
 
-tar xvf /tmp/apache-maven-3.6.3-bin.tar.gz -C /usr/lib/
+  wget http://mirrors.estointernet.in/apache/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz -P /tmp
+  tar xvf /tmp/apache-maven-3.6.3-bin.tar.gz -C /usr/lib/
 
-printf 
-"\nM2_HOME=\"/usr/lib/apache-maven-3.6.3\"
-export M2_HOME\n
-M2=\"$M2_HOME/bin\"
-MAVEN_OPTS=\"-Xms256m -Xmx512m\"
-export M2 MAVEN_OPTS\n
-PATH=$M2:$PATH
-export PATH\n" >> /etc/profile
+  printf "M2_HOME=\"/usr/lib/apache-maven-3.6.3\"
+  export M2_HOME\n
+  M2=\"${M2_HOME}/bin\"
+  MAVEN_OPTS=\"-Xms256m -Xmx512m\"
+  export M2 MAVEN_OPTS\n
+  PATH=${M2_HOME}/bin:${PATH}
+  export PATH\n" >> /etc/profile
 
-. /etc/profile
+  . /etc/profile
+fi
 
 env | grep M2
 
