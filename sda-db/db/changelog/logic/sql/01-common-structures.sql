@@ -38,7 +38,7 @@ create table if not exists model.group_names
 create table if not exists model.lessons_to_schedules
 (
     schedule_id   int         not null,
-    position      int         not null check ( position < 8 and position >= 0),
+    position      int         not null check ( position < 9 and position >= 1),
     lesson_ref_id int         not null,
     hash          int         not null,
     update_time   timestamptz not null default now(),
@@ -62,7 +62,7 @@ create table if not exists model.lessons
     discipline_id int         not null,
     teacher_id    int         not null,
     type          varchar(25) not null,
-    auditorium    varchar(20) not null
+    auditorium    varchar(30) not null
 );
 
 create table if not exists model.disciplines

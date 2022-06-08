@@ -16,12 +16,12 @@ import io.ktor.server.tomcat.*
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
-fun main(args: Array<String>): Unit {
+fun main(args: Array<String>) {
     PropertyReader.load()
     val exec = Executors.newSingleThreadScheduledExecutor()
     exec.scheduleAtFixedRate(
-        ScheduleReader(ScheduleParser(), ScheduleReaderService())
-        , 0, 1, TimeUnit.MINUTES)
+        ScheduleReader(ScheduleParser(), ScheduleReaderService()), 0, 1, TimeUnit.MINUTES
+    )
     EngineMain.main(args)
 }
 
