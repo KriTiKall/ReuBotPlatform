@@ -1,0 +1,37 @@
+version: '3'
+services:
+
+  postgres:
+    build:
+      context: sda-db
+      dockerfile: Dockerfile
+    container_name: rea-db
+    environment:
+      POSTGRES_PASSWORD: admin
+      POSTGRES_USER: "bot-api-admin"
+      POSTGRES_DB: "rea-bot-api-db"
+    ports:
+      - "5432:5432"
+    network_mode: host
+    restart: always
+
+  rabbit:
+#    image: "rabbitmq:3-alpine"
+    build:
+      context: ./
+      dockerfile: Dockerfile.rmq
+    container_name: rea-rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    network_mode: host
+
+  web:
+    build:
+      context: sl-model
+      dockerfile: Dockerfile
+    container_name: rea-java-web
+    network_mode: host
+    depends_on:
+      - rabbit
+      - postgres

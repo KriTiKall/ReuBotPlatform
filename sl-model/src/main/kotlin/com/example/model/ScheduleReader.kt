@@ -5,6 +5,7 @@ import com.example.model.parser.Parser
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.URL
+import java.sql.SQLException
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.ZoneId
@@ -29,34 +30,38 @@ class ScheduleReader(
     private var readed = false
 
     override fun run() {
-        val currentTime = LocalTime.now()
-        var array: Array<Schedule>
+        try {
+            val currentTime = LocalTime.now()
+            var array: Array<Schedule>
 
-        // every day in 5 am parsing timetable on week forward
-        if (currentTime.hour == 5 && !readed) {
-            var date = LocalDate.now()
-            date += 2
-            for (i in 2..8) {
+            // every day in 5 am parsing timetable on week forward
+            if (currentTime.hour == 5 && !readed) {
+                var date = LocalDate.now()
+                date += 2
+                for (i in 2..8) {
+                    array = parseSchedule(date)
+                    array.forEach(service::saveOrUpdate)
+                    date++
+                }
+                readed = true
+            }
+
+            // to store today's and tomorrow's schedule
+            if (currentTime.minute % 2 == 0) {
+                var date = LocalDate.now()
                 array = parseSchedule(date)
                 array.forEach(service::saveOrUpdate)
+
                 date++
+                array = parseSchedule(date)
+                array.forEach(service::saveOrUpdate)
             }
-            readed = true
-        }
 
-        // to store today's and tomorrow's schedule
-        if (currentTime.minute % 2 == 0) {
-            var date = LocalDate.now()
-            array = parseSchedule(date)
-            array.forEach(service::saveOrUpdate)
-
-            date++
-            array = parseSchedule(date)
-            array.forEach(service::saveOrUpdate)
-        }
-
-        if (currentTime.hour == 6 && readed) {
-            readed = false
+            if (currentTime.hour == 6 && readed) {
+                readed = false
+            }
+        } catch (e: SQLException) {
+            println(e.stackTraceToString())
         }
     }
 
