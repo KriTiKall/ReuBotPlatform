@@ -49,7 +49,7 @@ sudo yum install -y postgresql-client
 printf "${LC}Maven installation${NC}\n"
 
 # Download
-if [ ! -f /tmp/apache-maven-3.6.3-bin.tar.gz ]; then
+if [ ! -d /usr/lib/apache-maven-3.6.3 ]; then
 
   wget http://mirrors.estointernet.in/apache/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz -P /tmp
   tar xvf /tmp/apache-maven-3.6.3-bin.tar.gz -C /usr/lib/
