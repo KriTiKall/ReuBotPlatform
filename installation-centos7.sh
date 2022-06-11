@@ -41,6 +41,12 @@ sudo yum install docker-ce docker-ce-cli containerd.io docker-compose-plugin
 # Start 
 sudo systemctl start docker
 
+if [ ! -f /usr/local/bin/docker-compose ]; then
+  sudo curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+  sudo chmod +x /usr/local/bin/docker-compose
+  docker-compose --version
+fi
+
 printf "${LC}PostgreSQL installation${NC}\n"
 
 # Install PostgreSQL Client
@@ -54,7 +60,9 @@ if [ ! -d /usr/lib/apache-maven-3.6.3 ]; then
   wget http://mirrors.estointernet.in/apache/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz -P /tmp
   tar xvf /tmp/apache-maven-3.6.3-bin.tar.gz -C /usr/lib/
 
-  printf "M2_HOME=\"/usr/lib/apache-maven-3.6.3\"
+  M2_HOME='usr/lib/apache-maven-3.6.3'
+
+  printf "M2_HOME=\"/${M2_HOME}\"
   export M2_HOME\n
   M2=\"${M2_HOME}/bin\"
   MAVEN_OPTS=\"-Xms256m -Xmx512m\"
