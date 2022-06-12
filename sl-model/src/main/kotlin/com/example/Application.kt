@@ -17,7 +17,7 @@ import io.ktor.server.tomcat.*
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
-fun main(args: Array<String>): Unit {
+fun main(args: Array<String>) {
     PropertyReader.load()
     val exec = Executors.newSingleThreadScheduledExecutor()
     exec.scheduleAtFixedRate(

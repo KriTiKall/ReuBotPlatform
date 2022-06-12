@@ -1,6 +1,5 @@
 package com.example.model
 
-import com.example.data.AccumulatedData
 import com.example.model.entity.Schedule
 import com.example.model.parser.Parser
 import java.io.BufferedReader
@@ -12,6 +11,7 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.*
 import java.util.stream.Collectors
+import kotlin.random.Random.Default.nextInt
 
 interface IScheduleService {
     fun saveOrUpdate(schedule: Schedule): String
@@ -57,7 +57,7 @@ class ScheduleReader(
         }
 
         // to store today's and tomorrow's schedule
-        if (currentTime.minute % 2 == 0) {
+        if (currentTime.minute % 2 == 0) { // todo replace 2 on 5
             var date = LocalDate.now()
             array = parseSchedule(date)
             array.forEach {
@@ -68,6 +68,7 @@ class ScheduleReader(
                 )
             }
 
+            date++
             date++
             array = parseSchedule(date)
             array.forEach {
@@ -130,5 +131,18 @@ class MockScheduleService : IScheduleService {
     override fun saveOrUpdate(schedule: Schedule): String {
         println(schedule)
         return ""
+    }
+}
+
+class RandomScheduleService : IScheduleService {
+
+    override fun saveOrUpdate(schedule: Schedule): String {
+        val next = nextInt(20)
+        println("${schedule.groupName} = ${schedule.date} = $next")
+        return when(next) {
+            -1 -> "insert"
+            1 -> "update"
+            else -> "dont changed"
+        }
     }
 }
