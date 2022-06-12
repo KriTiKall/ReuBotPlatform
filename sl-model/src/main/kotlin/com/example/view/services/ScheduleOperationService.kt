@@ -12,7 +12,7 @@ class ScheduleOperation : IScheduleOperations {
     private val dao = ScheduleOperationDoa();
 
     override fun getCurrentSchedule(groupName: String): Schedule {
-        return dao.getCurrentSchedule(groupName)
+        return dao.getSchedule(groupName, LocalDate.now().toString(), true)
     }
 
     override fun getSchedules(groupName: String): Array<Schedule> {
@@ -24,7 +24,7 @@ class ScheduleOperation : IScheduleOperations {
     }
 
     override fun getSchedule(groupName: String, date: String): Schedule {
-        return dao.getSchedule(groupName, date)
+        return dao.getSchedule(groupName, date, true)
     }
 }
 
@@ -59,10 +59,6 @@ class ScheduleOperationDoa : IScheduleOperationsDao {
         connection.close()
     }
 
-    override fun getCurrentSchedule(groupName: String): Schedule {
-        return getSchedule(groupName, LocalDate.now().toString())
-    }
-
     override fun getSchedules(groupName: String): Array<Schedule> {
         val stm = connection.prepareStatement("select * from model.get_schedules('$groupName'::varchar, 'true');" )
         val set = stm.executeQuery()
@@ -81,8 +77,8 @@ class ScheduleOperationDoa : IScheduleOperationsDao {
         return format.decodeFromString(json)
     }
 
-    override fun getSchedule(groupName: String, date: String): Schedule {
-        val stm = connection.prepareStatement("select * from model.get_schedule('$groupName'::varchar, '$date'::date, 'true');" )
+    override fun getSchedule(groupName: String, date: String, isActual: Boolean): Schedule {
+        val stm = connection.prepareStatement("select * from model.get_schedule('$groupName'::varchar, '$date'::date, '$isActual');" )
         val set = stm.executeQuery()
         set.next()
         val json = set.getString(1)

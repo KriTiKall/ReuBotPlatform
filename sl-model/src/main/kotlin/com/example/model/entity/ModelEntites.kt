@@ -107,4 +107,6 @@ data class Schedule(
         result = 31 * result + lessons.contentHashCode()
         return result
     }
+
+    fun isEmpty() = this == Schedule()
 }

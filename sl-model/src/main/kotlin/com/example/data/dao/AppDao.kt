@@ -1,5 +1,6 @@
 package data.dao
 
+import com.example.data.BrokerService
 import com.example.data.ConnectionGetter
 import com.example.data.PropertyReader
 import com.example.model.MockScheduleService
@@ -13,7 +14,7 @@ fun main() {
     PropertyReader.load()
     val getter = ConnectionGetter
 
-    val schedule = ScheduleReader(ScheduleParser(true), MockScheduleService()).parseSchedule(LocalDate.now())
+    val schedule = ScheduleReader(ScheduleParser(true), MockScheduleService(), BrokerService()).parseSchedule(LocalDate.now())
 
     val mapper = ScheduleDbMapper().set(schedule[0])
 

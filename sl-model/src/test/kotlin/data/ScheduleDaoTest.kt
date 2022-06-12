@@ -1,7 +1,9 @@
 package data
 
+import com.example.data.PropertyReader
 import com.example.model.entity.*
 import com.example.view.ScheduleOperationDoa
+import data.entites.ScheduleDbMapper
 import data.dao.ScheduleDao
 import kotlinx.serialization.encodeToString
 import org.junit.jupiter.api.AfterAll
@@ -19,6 +21,7 @@ internal class ScheduleDaoTest {
 
     @BeforeAll
     fun before() {
+        PropertyReader.load()
         initSchedules1()
     }
 
@@ -353,31 +356,35 @@ internal class ScheduleDaoTest {
     @Test
     fun saveOrUpdateTest1() {
         dao.saveOrUpdate(list.get(0))
-        val getSch = get.getSchedule("TEST1", "2022-03-13")
+        val getSch = get.getSchedule("TEST1", "2022-03-13", true)
         println("${encode(list.get(0))} \n ${encode(getSch)}")
-        assertEquals(list.get(0), getSch)
+        assertEquals(Schedule(), getSch)
     }
 
     @Test
     fun saveOrUpdateTest2() {
         dao.saveOrUpdate(list.get(1))
-        val getSch = get.getSchedule("TEST1", "2022-03-13")
-        println("${encode(list.get(0))} \n ${encode(getSch)}")
+        val getSch = get.getSchedule("TEST1", "2022-03-13", true)
+//        println("${encode(list.get(1))} \n ${encode(getSch)}")
+        print(ScheduleDbMapper().set(list.get(2)))
         assertEquals(list.get(1), getSch)
     }
 
     @Test
     fun saveOrUpdateTest3() {
         dao.saveOrUpdate(list.get(2))
-        val getSch = get.getSchedule("TEST1", "2022-03-13")
-        println("${encode(list.get(0))} \n ${encode(getSch)}")
+        val getSch = get.getSchedule("TEST1", "2022-03-13",true)
+//        println("${encode(list.get(0))} \n ${encode(getSch)}")
+        print(ScheduleDbMapper().set(list.get(2)))
         assertEquals(list.get(2), getSch)
     }
 
     @Test
-    fun returnTest() {
-        val getSch = get.getSchedule("TEST1", "2022-03-13")
-        assertEquals(list.get(2), getSch)
+    fun getPreviousScheduleTest() {
+//        dao.saveOrUpdate(list.get(2))
+        val getSch = get.getSchedule("TEST1", "2022-03-13",false)
+        println("${encode(list.get(0))} \n ${encode(getSch)}")
+        assertEquals(list.get(1), getSch)
     }
 
     fun encode(schedule: Schedule) : String {
