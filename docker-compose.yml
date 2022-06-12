@@ -32,6 +32,7 @@ services:
       dockerfile: Dockerfile
     container_name: rea-java-web
     network_mode: host
+    restart: always
     depends_on:
       - rabbit
       - postgres
