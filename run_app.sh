@@ -11,5 +11,3 @@ sudo docker-compose up -d --force-recreate
 cd sda-db
 # run liquibase
 mvn package
-
-
