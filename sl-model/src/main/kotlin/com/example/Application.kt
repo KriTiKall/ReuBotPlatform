@@ -35,6 +35,12 @@ fun Application.module(testing: Boolean = false) {
         }
         route("/api") {
             scheduleOperations(ScheduleOperation())
+            route("/dev") {
+                get("/") {
+                    call.respondText("Hello, dev")
+                }
+
+            }
         }
     }
 }
