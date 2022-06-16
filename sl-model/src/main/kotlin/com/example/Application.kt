@@ -5,7 +5,9 @@ import com.example.model.ScheduleReader
 import com.example.model.entity.format
 import com.example.model.parser.ScheduleParser
 import com.example.view.ScheduleOperation
+import com.example.view.developerOperations
 import com.example.view.scheduleOperations
+import com.example.view.services.DeveloperOperationService
 import data.dao.ScheduleReaderService
 import io.ktor.application.*
 import io.ktor.features.*
@@ -39,7 +41,7 @@ fun Application.module(testing: Boolean = false) {
                 get("/") {
                     call.respondText("Hello, dev")
                 }
-
+                developerOperations(DeveloperOperationService())
             }
         }
     }
