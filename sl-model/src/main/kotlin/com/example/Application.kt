@@ -21,9 +21,9 @@ import java.util.concurrent.TimeUnit
 fun main(args: Array<String>): Unit {
     PropertyReader.load()
     val exec = Executors.newSingleThreadScheduledExecutor()
-    exec.scheduleAtFixedRate(
-        ScheduleReader(ScheduleParser(), ScheduleReaderService())
-        , 0, 1, TimeUnit.MINUTES)
+//    exec.scheduleAtFixedRate(
+//        ScheduleReader(ScheduleParser(), ScheduleReaderService())
+//        , 0, 1, TimeUnit.MINUTES)
     EngineMain.main(args)
 }
 

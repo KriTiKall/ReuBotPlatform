@@ -34,21 +34,32 @@ fun Route.developerOperations(service: IDeveloperOperations) {
             )
         }
     }
+    route("/exists") {
+        // GET /api/dev/schedules  { "name" : "ПКо-41" }
+        get("/groups") {
+            val param = call.receive<CommonRequestParam>()
 
-    // GET /api/dev/schedules  { "name" : "ПКо-41" }
-    get("/schedules") {
-        val param = call.receive<DevRequestParam>()
+            try {
+                call.respond(service.getExistsGroups(param.date))
+            } catch (e: Exception) {
+                call.respondText(
+                    "Error: ${e.printStackTrace()}",
+                    status = HttpStatusCode.BadRequest
+                )
+            }
+        }
+        get("/dates") {
+            val param = call.receive<CommonRequestParam>()
 
-        try {
-            call.respond(service.getSchedules(param.date))
-        } catch (e: Exception) {
-            call.respondText(
-                "Error: ${e.printStackTrace()}",
-                status = HttpStatusCode.BadRequest
-            )
+            try {
+                call.respond(service.getExistsDates(param.name))
+            } catch (e: Exception) {
+                call.respondText(
+                    "Error: ${e.printStackTrace()}",
+                    status = HttpStatusCode.BadRequest
+                )
+            }
         }
     }
-}
 
-@Serializable
-data class DevRequestParam(val date: String = "");
+}
