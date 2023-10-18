@@ -1,4 +1,4 @@
-package com.example.data.dao
+package com.example.data.jdbc.dao
 
 import com.example.model.entity.Schedule
 

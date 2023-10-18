@@ -8,6 +8,9 @@ object ConnectionGetter {
     private val property = PropertyReader
 
     fun getConnection() : Connection {
+        if (!PropertyReader.isLoaded)
+            PropertyReader.load()
+
         val location = property.getProperty("db.location")
         val userName = property.getProperty("db.user_name")
         val userPassword = property.getProperty("db.user_password")

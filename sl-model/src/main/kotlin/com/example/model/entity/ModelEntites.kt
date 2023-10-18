@@ -55,6 +55,7 @@ class EmptyLesson() : LessonEntity {
 @SerialName("Lesson")
 data class Lesson(
     val name: String,
+    val teacherPost: String,
     val teacherName: String,
     @SerialName("lessonType")
     val type: String = "",
@@ -86,7 +87,7 @@ data class Schedule(
     var lessons: Array<Indivisible>
 ) {
 
-    constructor() : this("", "", Array(8) {SingleLesson(EmptyLesson())})
+    constructor() : this("", "", Array(8) { SingleLesson(EmptyLesson()) })
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

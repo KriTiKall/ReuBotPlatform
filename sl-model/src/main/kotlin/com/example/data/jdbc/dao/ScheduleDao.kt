@@ -1,7 +1,7 @@
 package data.dao
 
 import com.example.data.ConnectionGetter
-import com.example.data.dao.ScheduleReaderDAO
+import com.example.data.jdbc.dao.ScheduleReaderDAO
 import com.example.model.IScheduleService
 import com.example.model.entity.Schedule
 import data.entites.ScheduleDbMapper

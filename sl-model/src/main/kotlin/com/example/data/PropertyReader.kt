@@ -8,12 +8,13 @@ object PropertyReader {
 
     private val LOGGER = Logger.getLogger(PropertyReader::class.java.name)
     private var properties = Properties()
+    var isLoaded = false
+        private set
 
-    init {
-    }
 
     fun load() {
         properties.load(Thread.currentThread().getContextClassLoader().getResourceAsStream("config.properties"))
+        isLoaded = true
     }
 
     fun getProperty(name: String): String? {
