@@ -84,11 +84,12 @@ class ScheduleParser(val withName: Boolean = false) : Parser {
 
         var opInfo = splits.get(1)
 
-        val teacherName =
-            if (opInfo.contains(", ")) { // todo add parse teacher post
-                opInfo.split(", ")[1]
+        val (teacherPost, teacherName) =
+            if (opInfo.contains(", ")) {
+                val temp = opInfo.split(", ")
+                Pair(temp[0], temp[1])
             } else {
-                opInfo
+                Pair("", opInfo)
             }
 
         opInfo = splits.get(2)
@@ -103,6 +104,7 @@ class ScheduleParser(val withName: Boolean = false) : Parser {
 
         return Lesson(
             name,
+            teacherPost,
             teacherName,
             type,
             auditorium
