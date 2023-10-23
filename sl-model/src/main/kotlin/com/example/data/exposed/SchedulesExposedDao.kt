@@ -10,15 +10,15 @@ import java.time.OffsetDateTime
 
 class SchedulesExposedDao() {
 
-    private val connection: Database
+    private val logger = StdOutSqlLogger
 
-    init {
-        connection = Database.connect({ ConnectionGetter.getConnection() })
+    private val connection: Database by lazy {
+        Database.connect({ ConnectionGetter.getConnection() })
     }
 
     fun insertSchedule(schedule: Schedule) {
         transaction(connection) {
-            addLogger(StdOutSqlLogger)
+            addLogger(logger)
 
             val groupId = getIdOrInsert(
                 GroupNamesEntities,
@@ -60,7 +60,7 @@ class SchedulesExposedDao() {
     fun insertLessonCell(lessonCell: Indivisible): Pair<Int, Boolean> {
         var pair = Pair(-1, false)
         transaction(connection) {
-            addLogger(StdOutSqlLogger)
+            addLogger(logger)
 
             if (lessonCell is SingleLesson) {
                 val lesson = lessonCell.lesson
@@ -96,7 +96,7 @@ class SchedulesExposedDao() {
     private fun insertLessonAndGetId(lesson: Lesson): Int {
         var id: Int = -1
         transaction(connection) {
-            addLogger(StdOutSqlLogger)
+            addLogger(logger)
 
             val disId = getIdOrInsert(
                 DisciplinesEntities,
@@ -163,4 +163,79 @@ class SchedulesExposedDao() {
         } else
             query.single()[id]
     }
+
+    fun updateSchedule(schedule: Schedule) {
+        transaction(connection) {
+            addLogger(logger)
+
+            val groupId = GroupNamesEntities.select { GroupNamesEntities.name eq schedule.groupName }
+                .single()[GroupNamesEntities.id]
+
+            val schId = SchedulesEntities.select {
+                (SchedulesEntities.nameId eq groupId) and (SchedulesEntities.date eq LocalDate.parse(schedule.date))
+            }
+                .single()[SchedulesEntities.id]
+
+            SchedulesEntities.update({ SchedulesEntities.id eq schId }) {
+                it[hash] = schedule.hashCode()
+            }
+            // Delete all not actual lesson from current schedule
+            LessonsToSchedulesEntities.deleteWhere { (LessonsToSchedulesEntities.scheduleId eq schId) and (LessonsToSchedulesEntities.isActual eq false) }
+
+            schedule.lessons.forEachIndexed { i, ind ->
+                val hash = LessonsToSchedulesEntities.select {
+                    lesToSchFindCondition(schId, i)
+                }
+                    .takeIf { !it.empty() }
+                    ?.single()
+                    ?.get(LessonsToSchedulesEntities.hash)
+
+                if (hash != null) {
+                    if (!isCellEmpty(ind) && hash != ind.hashCode()) {
+                        // dbLes != crLes and dbLes = not empty and crLes = not empty
+                        LessonsToSchedulesEntities.update({lesToSchFindCondition(schId, i)}) {
+                            it[isActual] = false
+                        }
+
+                        saveScheduleLesson(
+                            lessonCell = ind,
+                            scheduleId = schId,
+                            index = i
+                        )
+                    }
+                    if (isCellEmpty(ind)) {
+                        // dbLes = not empty and crLes = empty
+                        LessonsToSchedulesEntities.update({lesToSchFindCondition(schId, i)}) {
+                            it[isActual] = false
+                        }
+                    }
+                } else {
+                    if (!isCellEmpty(ind)) {
+                        // dbLes = empty and crLes = not empty
+                        saveScheduleLesson(
+                            lessonCell = ind,
+                            scheduleId = schId,
+                            index = i
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    private fun isCellEmpty(indivisible: Indivisible) : Boolean {
+        if (indivisible is SingleLesson) {
+            return indivisible.lesson.isEmpty()
+        }
+        if (indivisible is PairLesson) {
+            val (f, s) = indivisible.pair
+            return f.isEmpty() || s.isEmpty()
+        }
+        return false
+    }
+
+    private fun lesToSchFindCondition(scheduleId: Int, index: Int): Op<Boolean> =
+        (LessonsToSchedulesEntities.scheduleId eq scheduleId) and
+                (LessonsToSchedulesEntities.position eq index) and
+                (LessonsToSchedulesEntities.isActual eq true)
 }
