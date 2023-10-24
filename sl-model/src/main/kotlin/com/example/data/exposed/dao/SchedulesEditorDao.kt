@@ -1,6 +1,7 @@
-package com.example.data.exposed
+package com.example.data.exposed.dao
 
 import com.example.data.ConnectionGetter
+import com.example.data.exposed.*
 import com.example.model.entity.*
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
@@ -8,7 +9,7 @@ import org.jetbrains.exposed.sql.transactions.transaction
 import java.time.LocalDate
 import java.time.OffsetDateTime
 
-class SchedulesExposedDao() {
+class SchedulesEditorDao() {
 
     private val logger = StdOutSqlLogger
 
@@ -180,7 +181,7 @@ class SchedulesExposedDao() {
                 it[hash] = schedule.hashCode()
             }
             // Delete all not actual lesson from current schedule
-            LessonsToSchedulesEntities.deleteWhere { (LessonsToSchedulesEntities.scheduleId eq schId) and (LessonsToSchedulesEntities.isActual eq false) }
+            LessonsToSchedulesEntities.deleteWhere { (scheduleId eq schId) and (isActual eq false) }
 
             schedule.lessons.forEachIndexed { i, ind ->
                 val hash = LessonsToSchedulesEntities.select {
@@ -193,7 +194,7 @@ class SchedulesExposedDao() {
                 if (hash != null) {
                     if (!isCellEmpty(ind) && hash != ind.hashCode()) {
                         // dbLes != crLes and dbLes = not empty and crLes = not empty
-                        LessonsToSchedulesEntities.update({lesToSchFindCondition(schId, i)}) {
+                        LessonsToSchedulesEntities.update({ lesToSchFindCondition(schId, i) }) {
                             it[isActual] = false
                         }
 
@@ -205,7 +206,7 @@ class SchedulesExposedDao() {
                     }
                     if (isCellEmpty(ind)) {
                         // dbLes = not empty and crLes = empty
-                        LessonsToSchedulesEntities.update({lesToSchFindCondition(schId, i)}) {
+                        LessonsToSchedulesEntities.update({ lesToSchFindCondition(schId, i) }) {
                             it[isActual] = false
                         }
                     }
@@ -223,7 +224,7 @@ class SchedulesExposedDao() {
         }
     }
 
-    private fun isCellEmpty(indivisible: Indivisible) : Boolean {
+    private fun isCellEmpty(indivisible: Indivisible): Boolean {
         if (indivisible is SingleLesson) {
             return indivisible.lesson.isEmpty()
         }
